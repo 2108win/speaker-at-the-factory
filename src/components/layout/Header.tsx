@@ -75,102 +75,118 @@ const navItems = [
 const Header = (props: Props) => {
   const { t } = useTranslation();
   return (
-    <header className="absolute left-0 right-0 top-0 z-[50] m-4 flex items-center justify-between gap-4 rounded-lg border bg-background/10 p-4 backdrop-blur-lg">
-      <Logo />
-      <div className="hidden w-full flex-1 justify-end gap-4 md:flex">
-        <NavigationMenu>
-          <NavigationMenuList>
-            {navItems.map((item) => (
-              <NavigationMenuItem key={item.title}>
-                {item.items ? (
-                  <NavigationMenuTrigger>{t(item.title)}</NavigationMenuTrigger>
-                ) : (
-                  <Link href={item.href} legacyBehavior passHref>
-                    <NavigationMenuLink
-                      className={navigationMenuTriggerStyle()}
+    <header className="sticky top-0 z-[50] w-full max-w-7xl p-4">
+      <div className="flex items-center justify-between rounded-lg bg-slate-100/20 p-4 backdrop-blur-lg dark:bg-slate-900/20">
+        <Logo />
+        <div className="hidden w-full flex-1 justify-end gap-2 lg:flex">
+          <NavigationMenu>
+            <NavigationMenuList>
+              {navItems.map((item) => (
+                <NavigationMenuItem key={item.title}>
+                  {item.items ? (
+                    <NavigationMenuTrigger
+                      className={buttonVariants({
+                        variant: "link",
+                        className:
+                          "bg-transparent text-lg hover:!bg-transparent hover:!text-accent-foreground dark:text-neutral-50",
+                      })}
                     >
                       {t(item.title)}
-                    </NavigationMenuLink>
-                  </Link>
-                )}
-                {item.items && (
-                  <NavigationMenuContent>
-                    <ul className="grid w-[300px] gap-3 p-4 md:w-[500px] md:grid-cols-2">
-                      {item.items.map((subItem) => (
-                        <ListItem
-                          key={subItem.title}
-                          title={subItem.title}
-                          href={subItem.href}
-                        >
-                          {subItem.description}
-                        </ListItem>
-                      ))}
-                    </ul>
-                  </NavigationMenuContent>
-                )}
-              </NavigationMenuItem>
-            ))}
-          </NavigationMenuList>
-        </NavigationMenu>
-        <div className="flex items-center gap-2">
-          <LanguageChanger />
-          <Button>Login</Button>
-        </div>
-      </div>
-      <Sheet>
-        <SheetTrigger className="block md:hidden">
-          <Menu className="h-5 w-5" />
-        </SheetTrigger>
-        <SheetContent>
-          <SheetHeader className="h-[95%]">
-            <SheetTitle>
-              <Logo />
-            </SheetTitle>
-            <SheetDescription className="!mt-4 h-full">
-              <ScrollArea className="h-full">
-                <div className="-m-5 flex h-full flex-col items-start gap-2 p-7">
-                  <LanguageChanger />
-                  <Button className="w-full">Login</Button>
-                  {navItems.map((item) => (
-                    <>
-                      <Link
-                        key={item.title}
+                    </NavigationMenuTrigger>
+                  ) : (
+                    <Link href={item.href} legacyBehavior passHref>
+                      <NavigationMenuLink
                         className={buttonVariants({
-                          variant: "ghost",
-                          className: "w-fit",
+                          variant: "link",
+                          className: "!text-lg dark:text-neutral-50",
                         })}
-                        href={item.href}
                       >
                         {t(item.title)}
-                      </Link>
-                      {item.items && (
-                        <ul className="flex flex-col gap-3 pl-4">
-                          {item.items.map((subItem) => (
-                            <li key={subItem.title} className="border-l-2 pl-1">
-                              <Link
-                                href={subItem.href}
-                                passHref
-                                className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                      </NavigationMenuLink>
+                    </Link>
+                  )}
+                  {item.items && (
+                    <NavigationMenuContent>
+                      <ul className="grid w-[300px] gap-3 p-4 md:w-[500px] md:grid-cols-2">
+                        {item.items.map((subItem) => (
+                          <ListItem
+                            key={subItem.title}
+                            title={subItem.title}
+                            href={subItem.href}
+                          >
+                            {subItem.description}
+                          </ListItem>
+                        ))}
+                      </ul>
+                    </NavigationMenuContent>
+                  )}
+                </NavigationMenuItem>
+              ))}
+            </NavigationMenuList>
+          </NavigationMenu>
+          <div className="flex items-center gap-2">
+            <LanguageChanger />
+            <Button>Login</Button>
+          </div>
+        </div>
+        <Sheet>
+          <SheetTrigger className="block lg:hidden">
+            <Menu className="h-5 w-5 dark:text-neutral-50" />
+          </SheetTrigger>
+          <SheetContent>
+            <SheetHeader className="h-[95%]">
+              <SheetTitle>
+                <Logo />
+              </SheetTitle>
+              <SheetDescription className="!mt-4 h-full">
+                <ScrollArea className="h-full">
+                  <div className="-m-5 flex h-full flex-col items-start gap-2 p-7">
+                    <LanguageChanger />
+                    <Button className="w-full">Login</Button>
+                    {navItems.map((item) => (
+                      <>
+                        <Link
+                          key={item.title}
+                          className={buttonVariants({
+                            variant: "link",
+                            className: "w-fit !text-lg dark:text-neutral-50",
+                          })}
+                          href={item.href}
+                        >
+                          {t(item.title)}
+                        </Link>
+                        {item.items && (
+                          <ul className="flex flex-col gap-3 pl-4">
+                            {item.items.map((subItem) => (
+                              <li
+                                key={subItem.title}
+                                className="border-l-2 pl-1"
                               >
-                                <div className="text-sm font-medium leading-none">
-                                  {subItem.title}
-                                </div>
-                                <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                                  {subItem.description}
-                                </p>
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </>
-                  ))}
-                </div>
-              </ScrollArea>
-            </SheetDescription>
-          </SheetHeader>
-        </SheetContent>
-      </Sheet>
+                                <Link
+                                  href={subItem.href}
+                                  passHref
+                                  className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                >
+                                  <div className="text-lg font-medium leading-none">
+                                    {subItem.title}
+                                  </div>
+                                  <p className="line-clamp-2 text-base leading-snug text-muted-foreground">
+                                    {subItem.description}
+                                  </p>
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </>
+                    ))}
+                  </div>
+                </ScrollArea>
+              </SheetDescription>
+            </SheetHeader>
+          </SheetContent>
+        </Sheet>
+      </div>
     </header>
   );
 };
@@ -192,8 +208,8 @@ const ListItem = React.forwardRef<
           )}
           {...props}
         >
-          <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+          <div className="text-lg font-medium leading-none">{title}</div>
+          <p className="line-clamp-2 text-base leading-snug text-muted-foreground">
             {children}
           </p>
         </a>

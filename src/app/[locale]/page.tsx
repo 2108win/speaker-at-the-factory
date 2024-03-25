@@ -2,6 +2,8 @@ import Header from "@/components/layout/Header";
 import Hero from "@/components/page/home/Hero";
 import initTranslations from "../i18n";
 import TranslationsProvider from "@/components/TranslationsProvider";
+import Story from "@/components/page/home/Story";
+import { AuroraBackground } from "@/components/ui/aurora-background";
 
 const i18nNamespaces = ["home"];
 
@@ -17,10 +19,11 @@ export default async function Home({
       locale={locale}
       resources={resources}
     >
-      <div className="relative">
+      <AuroraBackground className="gap-20">
         <Header />
         <Hero />
-      </div>
+        <Story />
+      </AuroraBackground>
     </TranslationsProvider>
   );
 }

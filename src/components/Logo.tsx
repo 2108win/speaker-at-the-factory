@@ -15,7 +15,7 @@ const Logo = (props: Props) => {
         height={40}
         alt="logo_image"
       />
-      <span className="text-2xl font-bold tracking-[-1px] lg:text-3xl">
+      <span className="relative z-10 bg-gradient-to-r from-slate-800 to-slate-500 bg-clip-text text-center text-2xl font-bold tracking-[-1px] text-transparent dark:from-neutral-200 dark:to-neutral-50 lg:text-3xl">
         Loa Tại Xưởng
       </span>
     </Link>

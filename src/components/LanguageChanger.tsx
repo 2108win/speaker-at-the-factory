@@ -41,7 +41,10 @@ export default function LanguageChanger() {
 
   return (
     <select
-      className={buttonVariants({ variant: "outline", className: "w-fit" })}
+      className={buttonVariants({
+        variant: "outline",
+        className: "w-fit dark:text-neutral-50",
+      })}
       onChange={handleChange}
       value={currentLocale}
     >
