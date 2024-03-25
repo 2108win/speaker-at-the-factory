@@ -75,10 +75,10 @@ const navItems = [
 const Header = (props: Props) => {
   const { t } = useTranslation();
   return (
-    <header className="sticky top-0 z-[50] w-full max-w-7xl p-4">
-      <div className="flex items-center justify-between rounded-lg bg-slate-100/20 p-4 backdrop-blur-lg dark:bg-slate-900/20">
+    <header className="sticky top-0 z-[50] mx-auto w-full max-w-7xl p-4">
+      <div className="flex items-center justify-between rounded-lg bg-slate-100/20 p-4 backdrop-blur-md dark:bg-slate-950/30">
         <Logo />
-        <div className="hidden w-full flex-1 justify-end gap-2 lg:flex">
+        <div className="hidden w-fit gap-2 lg:flex">
           <NavigationMenu>
             <NavigationMenuList>
               {navItems.map((item) => (
@@ -108,15 +108,21 @@ const Header = (props: Props) => {
                   {item.items && (
                     <NavigationMenuContent>
                       <ul className="grid w-[300px] gap-3 p-4 md:w-[500px] md:grid-cols-2">
-                        {item.items.map((subItem) => (
-                          <ListItem
-                            key={subItem.title}
-                            title={subItem.title}
-                            href={subItem.href}
-                          >
-                            {subItem.description}
-                          </ListItem>
-                        ))}
+                        {item.items.map(
+                          (subItem: {
+                            title: string;
+                            href: string;
+                            description: string;
+                          }) => (
+                            <ListItem
+                              key={subItem.title}
+                              title={subItem.title}
+                              href={subItem.href}
+                            >
+                              {subItem.description}
+                            </ListItem>
+                          ),
+                        )}
                       </ul>
                     </NavigationMenuContent>
                   )}
@@ -124,14 +130,19 @@ const Header = (props: Props) => {
               ))}
             </NavigationMenuList>
           </NavigationMenu>
-          <div className="flex items-center gap-2">
-            <LanguageChanger />
-            <Button>Login</Button>
-          </div>
+        </div>
+        <div className="hidden items-center gap-2 lg:flex">
+          <LanguageChanger />
+          <Button>Login</Button>
         </div>
         <Sheet>
-          <SheetTrigger className="block lg:hidden">
-            <Menu className="h-5 w-5 dark:text-neutral-50" />
+          <SheetTrigger
+            className={buttonVariants({
+              variant: "ghost",
+              className: "lg:hidden",
+            })}
+          >
+            <Menu className="h-8 w-8 dark:text-neutral-50" />
           </SheetTrigger>
           <SheetContent>
             <SheetHeader className="h-[95%]">

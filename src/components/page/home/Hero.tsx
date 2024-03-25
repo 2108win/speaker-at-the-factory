@@ -1,9 +1,5 @@
 "use client";
 
-import { AuroraBackground } from "@/components/ui/aurora-background";
-import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
-import { motion } from "framer-motion";
-import { Rocket } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -13,36 +9,25 @@ type Props = {};
 const Hero = (props: Props) => {
   const { t } = useTranslation();
   return (
-    <motion.div
-      initial={{ opacity: 0.0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{
-        delay: 0.3,
-        duration: 1,
-        ease: "easeInOut",
-      }}
-      className="relative grid h-[calc(100dvh-264px)] max-w-7xl grid-cols-1 items-center gap-6 px-4 lg:grid-cols-2"
-    >
-      <div className="flex flex-col gap-4 text-center lg:text-left">
-        <div className="bg-gradient-to-r from-slate-500 to-slate-950 bg-clip-text text-5xl font-bold !leading-normal text-transparent dark:from-neutral-700 dark:to-neutral-100 md:text-7xl">
+    <div className="relative z-[1] mx-auto -mt-12 grid min-h-[calc(100dvh-104px)] max-w-7xl grid-cols-1 items-center gap-6 px-8 md:-mt-16 lg:-mt-20 lg:grid-cols-2">
+      <div className="z-10 flex flex-col gap-4 text-center lg:text-left">
+        <div className="bg-gradient-to-r from-slate-500 to-slate-950 bg-clip-text text-5xl font-bold !leading-normal text-transparent dark:from-neutral-700 dark:to-neutral-100 md:from-neutral-700 md:to-neutral-100 md:text-7xl">
           {t("hero_title")} giá như ở nhà
         </div>
-        <div className="py-4 text-base font-medium dark:text-neutral-200 md:text-xl">
+        <div className="py-4 text-base font-medium dark:text-neutral-200 md:text-xl md:text-neutral-200">
           {t("hero_subtitle")}
         </div>
         <div className="mx-auto mt-8 lg:mx-0">
-          <HoverBorderGradient
-            containerClassName="rounded-full"
-            as="button"
-            className="flex items-center space-x-2 bg-black/30 px-8 py-4 backdrop-blur-lg dark:bg-neutral-50/20"
-          >
-            <Rocket className="h-6 w-6" />
-            <span className="text-lg">{t("hero_explore")}</span>
-          </HoverBorderGradient>
+          <button className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
+            <span className="absolute inset-[-1000%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#000000_0%,#555555_50%,#ffffff_100%)] dark:bg-[conic-gradient(from_90deg_at_50%_50%,#ffffff_0%,#555555_50%,#000000_100%)]" />
+            <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950/10 px-8 py-4 text-lg font-medium text-white backdrop-blur-lg hover:bg-slate-900/70 dark:bg-neutral-50/10 hover:dark:bg-slate-950/70">
+              {t("hero_explore")}
+            </span>
+          </button>
         </div>
       </div>
-      <div className="flex h-full items-center justify-center">
-        <div className="relative h-full max-h-[600px]">
+      <div className="z-10 flex h-full items-center justify-center">
+        <div className="relative h-full max-h-[400px]">
           <Image
             className="h-full w-full object-cover"
             src="/hero_product.png"
@@ -52,7 +37,7 @@ const Hero = (props: Props) => {
           />
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
