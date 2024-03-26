@@ -27,14 +27,16 @@ const Story = () => {
         {dataStory.map((story, index) => (
           <div
             key={index}
-            className="relative h-[400px] w-full overflow-hidden rounded-lg after:absolute after:inset-0 after:bg-slate-900/10 after:backdrop-blur-[2px] after:content-[''] md:h-[600px]"
+            className="relative h-[400px] w-full overflow-hidden rounded-lg md:h-[600px] lg:h-[800px]"
           >
+            <div className="absolute inset-0 bg-slate-900/10 backdrop-blur-[2px]"></div>
             <Image
               className="h-full w-full rounded-lg object-cover"
               src={story.image}
               alt={story.title}
               width={400}
               height={600}
+              priority
             />
             <div className="absolute left-0 top-0 z-10 flex flex-col gap-6 p-4 md:p-10">
               <h3 className="text-3xl font-semibold text-neutral-50 lg:text-5xl">

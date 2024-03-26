@@ -19,7 +19,7 @@ const BestSeller = () => {
     <div className="z-[1] mx-auto mt-12 h-full max-w-7xl px-4 md:mt-16 lg:mt-20">
       {dataProduct && (
         <div className="grid grid-cols-1 items-center gap-16 md:grid-cols-2">
-          <div className="lg:h-[800px]: relative h-[400px] w-full rounded-lg md:h-[600px]">
+          <div className="lg:h-[800px] relative h-[400px] w-full rounded-lg md:h-[600px]">
             <Image
               className="h-full w-full rounded-lg object-cover"
               src={dataProduct.image}
