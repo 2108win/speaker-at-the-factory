@@ -22,7 +22,7 @@ const dataStory = [
 const Story = () => {
   const { t } = useTranslation();
   return (
-    <div className="relative z-[1] mx-auto max-w-7xl px-4">
+    <div className="relative z-[1] mx-auto mt-12 max-w-7xl px-4 md:mt-16 lg:mt-20">
       <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
         {dataStory.map((story, index) => (
           <div

@@ -33,11 +33,11 @@ const dataProduct = [
 
 const ListProduct = () => {
   return (
-    <div className="z-[1] mx-auto max-w-7xl px-4">
+    <div className="z-[1] mx-auto mt-12 w-full max-w-7xl px-4 md:mt-16 lg:mt-20">
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {dataProduct.map((product, index) => (
           <div key={index} className="flex flex-col space-y-2 overflow-hidden">
-            <div className="relative h-[400px] w-full rounded-lg bg-black/90 backdrop-blur-3xl">
+            <div className="relative h-full w-full rounded-lg bg-black/90 backdrop-blur-3xl">
               <Image
                 className="h-full w-full rounded-lg object-cover"
                 src={product.image}

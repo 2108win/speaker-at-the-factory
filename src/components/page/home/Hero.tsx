@@ -9,7 +9,7 @@ type Props = {};
 const Hero = (props: Props) => {
   const { t } = useTranslation();
   return (
-    <div className="relative z-[5] mx-auto -mt-12 grid min-h-[calc(100dvh-104px)] max-w-7xl grid-cols-1 items-center gap-6 px-4 md:-mt-16 lg:-mt-20 lg:grid-cols-2 lg:px-8">
+    <div className="relative z-[5] mx-auto grid h-full min-h-[calc(100dvh-104px)] max-w-7xl grid-cols-1 items-center gap-6 px-4 lg:grid-cols-2 lg:px-8">
       <div className="z-10 flex flex-col gap-4 text-center lg:text-left">
         <div className="bg-gradient-to-r from-slate-500 to-slate-950 bg-clip-text text-5xl font-bold !leading-normal text-transparent dark:from-neutral-700 dark:to-neutral-100 md:from-neutral-700 md:to-neutral-100 md:text-7xl">
           {t("hero_title")} giá như ở nhà
