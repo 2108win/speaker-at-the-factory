@@ -23,7 +23,6 @@ const Story = () => {
   const { t } = useTranslation();
   return (
     <div className="relative z-[1] mx-auto max-w-7xl px-4">
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black"></div>
       <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
         {dataStory.map((story, index) => (
           <div
