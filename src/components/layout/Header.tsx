@@ -76,7 +76,7 @@ const Header = (props: Props) => {
 
   return (
     <header className="sticky top-0 z-[50] mx-auto w-full max-w-7xl p-4">
-      <div className="flex items-center justify-between rounded-lg bg-slate-100/20 p-4 backdrop-blur-md dark:bg-slate-950/30">
+      <div className="flex items-center justify-between rounded-lg bg-neutral-50/50 p-4 backdrop-blur-md dark:bg-slate-950/30">
         <Logo />
         <div className="hidden w-fit gap-2 lg:flex">
           <NavigationMenu>
@@ -147,7 +147,7 @@ const Header = (props: Props) => {
           >
             <Menu className="h-6 w-6 cursor-pointer dark:text-neutral-50 lg:hidden" />
           </SheetTrigger>
-          <SheetContent className="h-dvh">
+          <SheetContent className="h-dvh bg-white dark:bg-black">
             <SheetHeader>
               <Logo />
             </SheetHeader>

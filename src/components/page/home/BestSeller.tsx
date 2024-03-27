@@ -29,10 +29,10 @@ const BestSeller = () => {
             />
           </div>
           <div className="flex flex-col items-center space-y-2 text-center lg:items-start lg:text-left">
-            <div className="bg-gradient-to-l from-neutral-950 via-neutral-500 via-80% bg-clip-text text-center text-4xl font-bold text-transparent dark:from-neutral-50 md:text-5xl lg:text-6xl">
+            <div className="bg-gradient-to-l from-neutral-900 via-neutral-500 via-70% to-neutral-200 bg-clip-text text-center text-4xl font-bold text-transparent dark:from-neutral-50 dark:to-slate-800 md:text-5xl lg:text-6xl">
               {dataProduct.price}
             </div>
-            <div className="bg-gradient-to-l from-slate-900 via-neutral-500 via-80% bg-clip-text text-4xl text-transparent dark:from-neutral-50 lg:text-6xl">
+            <div className="bg-gradient-to-l from-slate-900 via-neutral-500 via-70% to-neutral-200 bg-clip-text text-4xl text-transparent dark:from-neutral-50 dark:to-slate-800 lg:text-6xl">
               {dataProduct.title}
             </div>
             <div className="py-4 text-base font-normal text-slate-600 dark:text-neutral-200 lg:text-xl">

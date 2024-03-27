@@ -26,7 +26,7 @@ export default async function Home({
       <div className="relative flex w-full flex-col items-center justify-center bg-white bg-dot-black/[0.2] dark:bg-black dark:bg-dot-white/[0.2]">
         <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black"></div>
         <Header />
-        <div className="absolute top-0 z-[1] hidden h-dvh w-full md:block lg:top-[104px] lg:h-[calc(100dvh-104px)]">
+        <div className="absolute top-0 z-[1] hidden h-lvh w-full md:block lg:top-[104px] lg:h-[calc(100lvh-104px)]">
           <Image
             className="h-full w-full object-cover"
             src="/hero_banner.jpg"

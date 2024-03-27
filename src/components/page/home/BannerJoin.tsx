@@ -17,7 +17,7 @@ const BannerJoin = () => {
       <div className="absolute inset-0 z-[2] bg-black/30 dark:bg-black/90"></div>
       <div className="mx-auto flex h-full w-full max-w-7xl items-center p-4 py-10 lg:p-8">
         <div className="z-10 flex w-[80%] flex-col gap-4 text-left">
-          <div className="bg-gradient-to-r from-slate-500 to-slate-950 bg-clip-text text-4xl font-bold !leading-normal text-transparent dark:from-neutral-700 dark:to-neutral-100 md:text-6xl">
+          <div className="text-balance bg-gradient-to-r from-slate-500 to-slate-950 bg-clip-text text-4xl font-bold !leading-normal text-transparent dark:from-neutral-700 dark:to-neutral-100 md:text-6xl">
             {t("home_join.title")}
           </div>
           <button className="relative inline-flex h-12 w-fit overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">

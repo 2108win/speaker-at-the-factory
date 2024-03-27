@@ -49,7 +49,7 @@ const Hero = (props: Props) => {
           <div className="bg-gradient-to-l from-neutral-950 via-neutral-500 via-80% bg-clip-text text-4xl font-bold text-transparent dark:from-neutral-50 md:text-5xl lg:text-6xl">
             {dataProduct.price}
           </div>
-          <div className="bg-gradient-to-l from-slate-900 via-neutral-500 via-80% bg-clip-text text-4xl text-transparent dark:from-neutral-50 lg:text-6xl">
+          <div className="bg-gradient-to-l from-slate-900 to-neutral-200 dark:to-slate-800 via-neutral-500 via-80% bg-clip-text text-4xl text-transparent dark:from-neutral-50 lg:text-6xl">
             {dataProduct.title}
           </div>
           <div className="py-4 text-base font-normal text-slate-600 dark:text-neutral-200 lg:text-xl">

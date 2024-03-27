@@ -17,20 +17,7 @@ export const metadata: Metadata = {
   description:
     "Sản xuất tại xưởng - Giá cả ổn định - Miễn phí vận chuyện nội thành - Bảo hành toàn quốc",
   openGraph: {
-    type: "website",
-    locale: "vi_VN",
-    url: process.env.CLIENT_URL,
-    title: "Loa tại xưởng - Chất lượng đỉnh cao, giá cả hợp lý",
-    description:
-      "Sản xuất tại xưởng - Giá cả ổn định - Miễn phí vận chuyện nội thành - Bảo hành toàn quốc",
-    images: [
-      {
-        url: `${process.env.CLIENT_URL}/opengraph-image.png`,
-        width: 1200,
-        height: 630,
-        alt: "Loa tại xưởng",
-      },
-    ],
+    images: "/og_image.png",
   },
 };
 
@@ -40,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning={true}>
+    <html lang="en" className="dark" suppressHydrationWarning={true}>
       <body
         className={cn(
           "min-h-dvh bg-background font-sans antialiased",
