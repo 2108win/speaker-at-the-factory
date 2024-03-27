@@ -7,7 +7,7 @@ type Props = {};
 
 const Logo = (props: Props) => {
   return (
-    <Link href={"/"} className="flex items-center gap-2">
+    <Link href={"/"} className="flex w-fit items-center gap-2">
       <Image
         className="block md:hidden"
         src="/logo.png"
