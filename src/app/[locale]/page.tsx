@@ -6,7 +6,6 @@ import Story from "@/components/page/home/Story";
 import Image from "next/image";
 import BestSeller from "@/components/page/home/BestSeller";
 import ListProduct from "@/components/page/home/ListProduct";
-import { BackgroundBeams } from "@/components/ui/background-beams";
 import BannerJoin from "@/components/page/home/BannerJoin";
 import Footer from "@/components/layout/Footer";
 
@@ -35,7 +34,6 @@ export default async function Home({
             fill
           />
         </div>
-        <BackgroundBeams className="z-[2] h-dvh" />
         <Hero />
         <Story />
         <BestSeller />

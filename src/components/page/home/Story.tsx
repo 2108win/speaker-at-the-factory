@@ -27,7 +27,7 @@ const Story = () => {
         {dataStory.map((story, index) => (
           <div
             key={index}
-            className="relative aspect-square w-full overflow-hidden rounded-lg md:aspect-[2/3]"
+            className="relative aspect-square w-full overflow-hidden rounded-lg"
           >
             <div className="absolute inset-0 bg-slate-900/10 backdrop-blur-[2px]"></div>
             <Image
@@ -41,7 +41,7 @@ const Story = () => {
               <h3 className="text-3xl font-semibold text-neutral-50 lg:text-5xl">
                 {story.title}
               </h3>
-              <span className="text-base text-neutral-50 lg:text-lg">
+              <span className="line-clamp-5 text-base text-neutral-50 lg:text-lg">
                 {story.description}
               </span>
               <button className="relative inline-flex h-12 w-fit overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
