@@ -5,11 +5,9 @@ import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { buttonVariants } from "./ui/button";
-import Image from "next/image";
-import { navigationMenuTriggerStyle } from "./ui/navigation-menu";
 
 export default function LanguageChanger() {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const currentLocale = i18n.language;
   const router = useRouter();
   const currentPathname = usePathname();
@@ -48,8 +46,8 @@ export default function LanguageChanger() {
       onChange={handleChange}
       value={currentLocale}
     >
-      <option value="en">English</option>
-      <option value="vi">Tiếng Việt</option>
+      <option value="en">{t("general_english")}</option>
+      <option value="vi">{t("general_vietnamese")}</option>
     </select>
   );
 }
