@@ -17,7 +17,14 @@ export const metadata: Metadata = {
   description:
     "Sản xuất tại xưởng - Giá cả ổn định - Miễn phí vận chuyện nội thành - Bảo hành toàn quốc",
   openGraph: {
-    images: "/og_image.png",
+    images: [
+      {
+        url: "og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Loa tại xưởng",
+      },
+    ],
   },
 };
 
