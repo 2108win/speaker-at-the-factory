@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import React from "react";
-import { useTranslation } from "react-i18next";
 
 const dataStory = [
   {
@@ -20,9 +19,8 @@ const dataStory = [
 ];
 
 const Story = () => {
-  const { t } = useTranslation();
   return (
-    <div className="relative z-[1] mx-auto mt-12 max-w-7xl px-4 md:mt-16 lg:mt-20 lg:px-8">
+    <div className="mt-layout-screen relative z-[1] mx-auto max-w-7xl px-4 lg:px-8">
       <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
         {dataStory.map((story, index) => (
           <div
@@ -47,7 +45,7 @@ const Story = () => {
               <button className="relative inline-flex h-12 w-fit overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
                 <span className="absolute inset-[-1000%] animate-[spin_5s_ease_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#000000_0%,#555555_50%,#ffffff_100%)] dark:bg-[conic-gradient(from_90deg_at_50%_50%,#ffffff_0%,#555555_50%,#000000_100%)]" />
                 <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-black/30 px-8 py-4 text-lg font-medium text-white backdrop-blur-lg dark:bg-neutral-50/20">
-                  {t("home_explore")}
+                  Xem thêm
                 </span>
               </button>
             </div>

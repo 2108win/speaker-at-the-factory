@@ -1,9 +1,6 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { useTranslation } from "react-i18next";
 
 const dataProduct = {
   price: "5.500.000 VNĐ",
@@ -14,9 +11,8 @@ const dataProduct = {
 };
 
 const BestSeller = () => {
-  const { t } = useTranslation();
   return (
-    <div className="z-[1] mx-auto mt-12 h-full max-w-7xl px-4 md:mt-16 lg:mt-20 lg:px-8">
+    <div className="mt-layout-screen z-[1] mx-auto h-full max-w-7xl px-4 lg:px-8">
       {dataProduct && (
         <div className="grid grid-cols-1 items-center gap-2 lg:grid-cols-2 lg:gap-16">
           <div className="relative mx-auto aspect-[4/3] w-full max-w-md rounded-lg lg:max-w-none">
@@ -41,20 +37,20 @@ const BestSeller = () => {
                 href={"#"}
                 className="!text-slate-950 underline hover:text-neutral-50 dark:!text-neutral-50"
               >
-                {t("general_read_more")}
+                Xem thêm
               </Link>
             </div>
             <div className="mt-8 flex flex-col items-center gap-4 md:flex-row">
               <button className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
                 <span className="absolute inset-[-1000%] animate-[spin_5s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#000000_0%,#555555_50%,#ffffff_100%)] dark:bg-[conic-gradient(from_90deg_at_50%_50%,#ffffff_0%,#555555_50%,#000000_100%)]" />
                 <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-black/10 px-8 py-4 text-lg font-medium text-neutral-50 backdrop-blur-lg hover:bg-slate-900/70 dark:bg-neutral-50/10 hover:dark:bg-black/70">
-                  {t("general_buy_now")}
+                  Mua ngay
                 </span>
               </button>
               <button className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
                 <span className="absolute inset-[-1000%] animate-[spin_10s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#000000_0%,#555555_50%,#ffffff_100%)] dark:bg-[conic-gradient(from_90deg_at_50%_50%,#ffffff_0%,#555555_50%,#000000_100%)]" />
                 <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-neutral-50 px-8 py-4 text-lg font-medium text-slate-950 backdrop-blur-lg hover:bg-slate-900/70 dark:bg-black dark:text-neutral-50 hover:dark:bg-black/70">
-                  {t("general_add_to_cart")}
+                  Thêm vào giỏ hàng
                 </span>
               </button>
             </div>

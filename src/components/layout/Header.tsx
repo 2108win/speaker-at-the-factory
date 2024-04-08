@@ -1,7 +1,6 @@
 "use client";
-
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import Logo from "@/components/Logo";
 import {
   NavigationMenu,
@@ -19,8 +18,6 @@ import {
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { useTranslation } from "react-i18next";
-import LanguageChanger from "../LanguageChanger";
 import { Menu } from "lucide-react";
 import { ScrollArea } from "../ui/scroll-area";
 import { usePathname } from "next/navigation";
@@ -29,11 +26,11 @@ type Props = {};
 
 const navItems = [
   {
-    title: "general_home",
+    title: "Trang chủ",
     href: "/",
   },
   {
-    title: "general_products",
+    title: "Sản phẩm",
     href: "/products",
     items: [
       {
@@ -64,16 +61,17 @@ const navItems = [
     ],
   },
   {
-    title: "general_contact",
+    title: "Blogs",
+    href: "/blogs",
+  },
+  {
+    title: "Liên hệ",
     href: "/contact",
   },
 ];
 
 const Header = (props: Props) => {
-  const { t } = useTranslation();
-  const pathname = usePathname();
-  const href = pathname.replace(/\/(en|vi)/, "/");
-
+  const href = usePathname();
   return (
     <header className="sticky top-0 z-[50] mx-auto w-full max-w-7xl p-4">
       <div className="flex items-center justify-between rounded-lg bg-neutral-50/50 p-4 backdrop-blur-md dark:bg-slate-950/30">
@@ -92,7 +90,7 @@ const Header = (props: Props) => {
                             "bg-transparent text-lg hover:!bg-transparent hover:!text-accent-foreground dark:text-neutral-50",
                         })}
                       >
-                        {t(item.title)}
+                        {item.title}
                       </NavigationMenuTrigger>
                       <NavigationMenuContent>
                         <ul className="grid w-[300px] gap-3 p-4 md:w-[500px] md:grid-cols-2">
@@ -125,7 +123,7 @@ const Header = (props: Props) => {
                           className: "!text-lg dark:text-neutral-50",
                         })}
                       >
-                        {t(item.title)}
+                        {item.title}
                       </NavigationMenuLink>
                     </Link>
                   )}
@@ -135,8 +133,7 @@ const Header = (props: Props) => {
           </NavigationMenu>
         </div>
         <div className="hidden items-center gap-2 lg:flex">
-          <LanguageChanger />
-          <Button>{t("general_login")}</Button>
+          <Button>Đăng nhập</Button>
         </div>
         <Sheet>
           <SheetTrigger
@@ -154,8 +151,7 @@ const Header = (props: Props) => {
 
             <div className="!mt-4 h-[calc(100dvh-200px)] space-y-2">
               <div className="flex flex-col gap-2">
-                <LanguageChanger />
-                <Button className="w-full">{t("general_login")}</Button>
+                <Button className="w-full">Đăng nhập</Button>
               </div>
               <ScrollArea className="h-full">
                 <div className="-mr-2 h-full pr-3">
@@ -171,7 +167,7 @@ const Header = (props: Props) => {
                         })}
                         href={item.href}
                       >
-                        {t(item.title)}
+                        {item.title}
                       </Link>
                       {item.items && (
                         <div className="flex flex-col gap-3 pl-4">

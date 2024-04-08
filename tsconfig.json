@@ -26,9 +26,6 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/i18nConfig.js",
-    "src/app/i18n.ts",
-    "src/middleware.ts"
   ],
   "exclude": ["node_modules"]
 }
