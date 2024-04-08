@@ -1,25 +1,38 @@
+"use client";
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-export async function generateStaticParams() {
-  const data = await fetch(
-    `${process.env.SERVER_URL}/Blog/getList?page=1&pageSize=10`,
-  ).then((res) => res.json());
-  return data;
-}
+// export async function generateStaticParams() {
+//   const data = await fetch(
+//     `${process.env.SERVER_URL}/Blog/getList?page=1&pageSize=10`,
+//   ).then((res) => res.json());
+//   return data;
+// }
 
-const ListBlog = async () => {
-  // fetch data blog from api
-  const data = await fetch(
-    `${process.env.SERVER_URL}/Blog/getList?page=1&pageSize=10`,
-  )
-    .then((res) => res.json())
-    .catch((err) => console.log(err));
+const ListBlog = () => {
+  const [data, setData] = useState<any[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  console.log("🚀 process.env.SERVER_URL", process.env.SERVER_URL);
+
+  useEffect(() => {
+    fetch(
+      `${process.env.SERVER_URL}/Blog/getList?page=${currentPage}&pageSize=10`,
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setData((prev) => [...prev, ...data]);
+      });
+  }, [currentPage]);
+
+  const loadMore = () => {
+    setCurrentPage((prev) => prev + 1);
+  };
   return (
-    <div className="mt-layout-screen">
+    <div className="mt-layout-screen mb-14 flex flex-col items-center gap-6 md:mb-16 lg:mb-20">
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {data?.map((blog: any, index: number) => (
           <Link
@@ -35,7 +48,7 @@ const ListBlog = async () => {
               src={blog.image}
               alt={blog.title}
             /> */}
-            <Skeleton className="h-56 w-full rounded-md"></Skeleton>
+            <Skeleton className="h-60 w-full rounded-md"></Skeleton>
             <div className="flex flex-col gap-2">
               <h1 className="text-2xl font-bold text-gray-900 dark:text-neutral-100">
                 {blog.title}
@@ -48,6 +61,11 @@ const ListBlog = async () => {
           </Link>
         ))}
       </div>
+      {data.length > 0 && (
+        <Button onClick={loadMore} variant="outline">
+          Tải thêm
+        </Button>
+      )}
     </div>
   );
 };

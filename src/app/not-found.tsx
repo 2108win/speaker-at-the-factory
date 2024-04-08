@@ -6,7 +6,7 @@ export default function GlobalError() {
   const navigate = useRouter();
 
   return (
-    <div className="absolute left-1/2 top-1/2 max-h-full -translate-x-1/2 -translate-y-1/2 items-center justify-center text-center">
+    <div className="!mb-auto mt-14 flex max-h-full flex-col items-center justify-center text-center md:mt-16 lg:mt-20">
       <span className="bg-gradient-to-b from-foreground to-transparent bg-clip-text text-[10rem] font-extrabold leading-none text-transparent">
         404
       </span>

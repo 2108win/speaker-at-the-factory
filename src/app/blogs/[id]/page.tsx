@@ -9,7 +9,7 @@ type Props = {
 
 export async function generateStaticParams() {
   const data = await fetch(
-    `${process.env.SERVER_URL}/Blog/getList?page=1&pageSize=10`,
+    `${process.env.NODE_ENV}/Blog/getList?page=1&pageSize=10`,
   );
   const dataJson: Props[] = await data.json();
   return dataJson.map(({ id }) => id);
