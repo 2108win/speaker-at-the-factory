@@ -62,11 +62,11 @@ const dataSocial: Social[] = [
 
 const Footer = () => {
   return (
-    <div className="relative z-[1] w-full bg-black/60 bg-dot-black/[0.2] dark:bg-white/60 dark:bg-dot-white/[0.2]">
+    <div className="relative z-[1] w-full bg-black/60 bg-dot-black/[0.2] dark:bg-white/60 dark:bg-dot-white/[0.2] mt-auto">
       <div className="mx-auto max-w-7xl px-4 py-12 md:py-16 lg:px-8 lg:py-20">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-5 lg:gap-8">
           <div className="text-2xl font-bold text-white dark:text-black md:col-span-3 md:row-span-2 lg:text-3xl">
-            <Logo />
+            <Logo hasText />
             <p className="mt-6 text-balance text-base font-normal">
               Đồng điệu với những tâm hồn trên con đường trưởng thành, Loa Tại Xưởng luôn lắng nghe
               những âm thanh từ những người bạn kể về sản phẩm, và cả những câu chuyện trong đời mỗi

@@ -1,29 +1,29 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { Blog } from "@/interfaces/blog";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const BlogDetailPage = () => {
   const [blog, setBlog] = useState<Blog>({} as Blog);
   const [isLoading, setIsLoading] = useState(false);
-  const { id } = useParams();
+  const { slug } = useParams();
 
   useEffect(() => {
     const fetchBlog = async () => {
       setIsLoading(true);
-      if (!id) return;
+      if (!slug) return;
       // const response = await fetch(`${process.env.SERVER_URL}/Blogs/${id}`);
       const response = await fetch(`https://1c6d5c6c04154692833486023b73778f.api.mockbin.io/`);
       const data = await response.json();
-      const foundBlog = data.find((blog: Blog) => blog.id == id);
+      const foundBlog = data.find((blog: Blog) => blog.id == slug);
       setBlog(foundBlog);
       setIsLoading(false);
     };
 
     fetchBlog();
-  }, [id]);
+  }, [slug]);
 
   if (!blog) {
     return <div>Bài viết không tồn tại</div>;

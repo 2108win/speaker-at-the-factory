@@ -5,6 +5,7 @@ import { Exo as FontSans } from "next/font/google";
 import { cn } from "@/lib/utils";
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
+import { Toaster } from "@/components/ui/sonner";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -38,12 +39,13 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn("bg-background font-sans antialiased", fontSans.variable)}>
-        <div className="relative flex h-full min-h-dvh w-full flex-col items-center justify-center bg-white bg-dot-black/[0.2] dark:bg-black dark:bg-dot-white/[0.2]">
+        <div className="relative flex h-full min-h-dvh w-full flex-col items-center justify-space-between bg-white bg-dot-black/[0.2] dark:bg-black dark:bg-dot-white/[0.2]">
           <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black"></div>
           <Header />
           {children}
           <Footer />
         </div>
+        <Toaster />
       </body>
     </html>
   );

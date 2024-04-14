@@ -1,4 +1,4 @@
-import BannerJoin from "@/components/pages/Home/BannerJoin";
+import BannerJoin from "@/components/BannerJoin";
 import BestSeller from "@/components/pages/Home/BestSeller";
 import Hero from "@/components/pages/Home/Hero";
 import ListProduct from "@/components/pages/Home/ListProduct";
