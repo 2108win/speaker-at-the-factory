@@ -13,6 +13,7 @@ const fontSans = FontSans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(`${process.env.CLIENT_URL}`),
   title: {
     default: "Loa tại xưởng - Chất lượng đỉnh cao, giá cả hợp lý",
     template: "%s - Loa tại xưởng",

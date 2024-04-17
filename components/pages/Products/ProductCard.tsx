@@ -8,6 +8,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
 import useCart from "@/hooks/useCart";
+import Currency from "@/components/ui/currency";
 
 const ProductCard = ({ product, className }: { product: Product; className?: string }) => {
   const router = useRouter();
@@ -44,11 +45,12 @@ const ProductCard = ({ product, className }: { product: Product; className?: str
         {product.brand}
       </div>
       <div className="mt-4 bg-gradient-to-l from-neutral-950 to-slate-700 bg-clip-text text-2xl font-bold text-transparent dark:from-neutral-50 dark:to-slate-400">
-        {product.price}
+        {/* {product.price} */}
+        <Currency value={product.price} />
       </div>
       <div
         onClick={() => router.push(`/products/${product.id}`)}
-        className="bg-gradient-to-l from-slate-900 to-slate-700 bg-clip-text text-2xl text-transparent dark:from-neutral-50 dark:to-slate-400 cursor-pointer"
+        className="bg-gradient-to-l from-slate-900 to-slate-700 bg-clip-text text-2xl text-transparent dark:from-neutral-50 h-16 line-clamp-2 dark:to-slate-400 cursor-pointer"
       >
         {product.productName}
       </div>

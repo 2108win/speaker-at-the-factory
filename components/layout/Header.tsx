@@ -85,7 +85,9 @@ const Header = (props: Props) => {
                           className={buttonVariants({
                             variant: currentPathname === href ? "outline" : "link",
                             className:
-                              "text-lg hover:!bg-transparent hover:!text-accent-foreground dark:text-neutral-50",
+                              currentPathname === href
+                                ? "text-lg !bg-background hover:!bg-accent hover:!text-accent-foreground"
+                                : "text-lg !bg-transparent",
                           })}
                         >
                           {title}
