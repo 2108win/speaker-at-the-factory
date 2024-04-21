@@ -12,8 +12,9 @@ const fontSans = FontSans({
   variable: "--font-sans",
 });
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+
 export const metadata: Metadata = {
-  metadataBase: new URL(`${process.env.CLIENT_URL}`),
   title: {
     default: "Loa tại xưởng - Chất lượng đỉnh cao, giá cả hợp lý",
     template: "%s - Loa tại xưởng",
@@ -23,12 +24,20 @@ export const metadata: Metadata = {
   openGraph: {
     images: [
       {
-        url: `${process.env.CLIENT_URL}/og-image.jpg`,
+        url: `${baseUrl}/og-image.jpg`,
         width: 1200,
         height: 630,
         alt: "Loa tại xưởng",
       },
     ],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
   },
 };
 

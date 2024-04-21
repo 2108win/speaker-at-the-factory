@@ -2,8 +2,6 @@ import React, { Suspense } from "react";
 import BlogList from "@/components/pages/Blogs/BlogList";
 import { Metadata } from "next";
 
-const api_url = process.env.SERVER_URL;
-
 export const metadata: Metadata = {
   title: "Blogs",
   description: "Blogs mới nhất từ Loa Tại Xưởng, cập nhật bài viết nhanh nhất về loa và công nghệ.",

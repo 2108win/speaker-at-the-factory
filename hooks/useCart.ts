@@ -8,6 +8,7 @@ interface CartStore {
   addItem: (data: Product, onClick: () => void) => void;
   removeItem: (id: string) => void;
   removeAll: () => void;
+  updateItem: (id: string, quantity: number) => void;
 }
 
 const useCart = create(
@@ -40,6 +41,9 @@ const useCart = create(
         toast.success("Sản phẩm đã được xóa khỏi giỏ hàng.");
       },
       removeAll: () => set({ items: [] }),
+      updateItem: (id: string, quantity: number) => {
+        set({ items: get().items.map((item) => (item.id === id ? { ...item, quantity } : item)) });
+      },
     }),
     {
       name: "cart-storage",

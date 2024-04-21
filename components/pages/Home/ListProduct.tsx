@@ -48,7 +48,7 @@ const ListProduct = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       setIsLoading(true);
-      const response = await fetch(`https://3781d0d8f2c44f49963604fb003202b5.api.mockbin.io/`);
+      const response = await fetch(`https://fakestoreapi.com/products?limit=5`);
       const data = await response.json();
       setProduct(data);
       setIsLoading(false);
@@ -82,7 +82,7 @@ const ListProduct = () => {
         className="mx-auto w-full max-w-[calc(100dvw-56px)] md:max-w-3xl lg:max-w-none"
       >
         <CarouselContent>
-          {product.slice(0, 5).map((product, index) => (
+          {product.map((product, index) => (
             <CarouselItem key={index} className="w-full pl-4 md:basis-1/2 lg:basis-1/3">
               <div className="p-1">
                 <ProductCard key={index} product={product} />

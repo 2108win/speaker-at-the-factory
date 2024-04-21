@@ -39,6 +39,7 @@ const Hero = (props: Props) => {
             alt={dataProduct.title}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw"
+            priority
           />
         </div>
         <div className="flex flex-col items-center space-y-2 text-center md:hidden md:items-start lg:text-left">

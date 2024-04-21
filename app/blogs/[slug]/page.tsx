@@ -4,14 +4,21 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import { Metadata } from "next";
 import Loading from "./loading";
+import formatDate from "@/components/ui/date-format";
 
 interface BlogProps {
   params: {
     slug: string;
   };
 }
+
+const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL
+  ? process.env.NEXT_PUBLIC_SERVER_URL
+  : "http://localhost:3000";
+const type = process.env.NEXT_PUBLIC_SERVER_URL ? "server" : "local";
+
 export async function generateStaticParams() {
-  const response = await fetch("https://1c6d5c6c04154692833486023b73778f.api.mockbin.io/");
+  const response = await fetch(`${serverUrl}/Blog/getList?type=${type}`);
   const data: Blog[] = await response.json();
   return data
     .map((blog: Blog) => ({
@@ -20,9 +27,8 @@ export async function generateStaticParams() {
     .slice(0, 10);
 }
 export async function generateMetadata({ params: { slug } }: BlogProps): Promise<Metadata> {
-  const response = await fetch("https://1c6d5c6c04154692833486023b73778f.api.mockbin.io/");
-  const data: Blog[] = await response.json();
-  const blogData = data.find((blog: Blog) => blog.id === slug);
+  const response = await fetch(`${serverUrl}/Blog/getOne/${slug}?type=${type}`);
+  const blogData = await response.json();
   if (!blogData) {
     return {
       title: "Bài viết không tồn tại",
@@ -32,13 +38,16 @@ export async function generateMetadata({ params: { slug } }: BlogProps): Promise
   return {
     title: blogData.title,
     description: blogData.content,
+    openGraph: {
+      title: blogData.title,
+      description: blogData.content,
+    },
   };
 }
 
 const BlogDetailPage = async ({ params: { slug } }: BlogProps) => {
-  const response = await fetch("https://1c6d5c6c04154692833486023b73778f.api.mockbin.io/");
-  const data: Blog[] = await response.json();
-  const blogData = data.find((blog: Blog) => blog.id === slug);
+  const response = await fetch(`${serverUrl}/Blog/getOne/${slug}?type=${type}`);
+  const blogData: Blog = await response.json();
 
   if (!blogData) {
     return <div>Bài viết không tồn tại</div>;
@@ -55,11 +64,12 @@ const BlogDetailPage = async ({ params: { slug } }: BlogProps) => {
     <Suspense fallback={<Loading />}>
       <div className="z-[5] h-full w-full">
         <div className="space-y-2 p-4 md:p-8">
-          <p className="text-center">Ngày cập nhật: {blogData.updated_at}</p>
+          <p className="text-center">Ngày cập nhật: {formatDate(blogData.createdAt)}</p>
           <div className="space-y-6 pt-6 max-w-screen-lg mx-auto">
             <h1 className="text-center text-3xl font-black">{blogData.title}</h1>
+            <p className="text-center">Tác giả: {blogData.normalizedName || "Unknown"}</p>
             <Image
-              src={blogData.image}
+              src={blogData.imageUrl}
               alt={blogData.title}
               width={1200}
               height={600}

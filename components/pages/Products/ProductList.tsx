@@ -13,15 +13,18 @@ const ProductList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [isLoading, setIsLoading] = useState(true);
+  console.log(process.env);
 
   useEffect(() => {
     const fetchProduct = async () => {
       setIsLoading(true);
       const response = await fetch(
         // `${api_url}/Product/getList?page=${currentPage}&pageSize=${pageSize}`
-        `https://3781d0d8f2c44f49963604fb003202b5.api.mockbin.io/`
+        // `https://3781d0d8f2c44f49963604fb003202b5.api.mockbin.io/`
+        `https://fakestoreapi.com/products`
       );
       const data = await response.json();
+      console.log("🚀 ~ fetchProduct ~ data:", data);
       setProduct(data);
       setProductFiltered(data);
       setIsLoading(false);

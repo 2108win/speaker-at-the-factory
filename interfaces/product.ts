@@ -1,5 +1,8 @@
 export type Product = {
   id: string;
+  title: string;
+  category: string;
+  description: string;
   productName: string;
   brand: string;
   model: string;
@@ -21,9 +24,10 @@ export type Product = {
   material: string;
   colorImg: string;
   frequency: string;
-  price: string;
+  price: number;
+  quantity: number;
   status: StatusProduct["id"];
-  images: Image["url"];
+  image: Image["url"];
 };
 
 export type Image = {

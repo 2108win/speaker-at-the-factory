@@ -6,6 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+
+const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
+const type = process.env.NEXT_PUBLIC_SERVER_URL ? "server" : "local";
 const BlogList = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [blogFiltered, setBlogFiltered] = useState<Blog[]>([]);
@@ -18,8 +21,8 @@ const BlogList = () => {
     const fetchBlogs = async () => {
       setIsLoading(true);
       const response = await fetch(
-        // `${api_url}/Blogs/getList?page=${currentPage}&pageSize=${pageSize}`
-        `https://1c6d5c6c04154692833486023b73778f.api.mockbin.io/`
+        `${serverUrl}/Blog/getList?type=${type}`
+        // `https://1c6d5c6c04154692833486023b73778f.api.mockbin.io/`
       );
       const data = await response.json();
       setBlogs(data);
@@ -32,7 +35,7 @@ const BlogList = () => {
 
   const handleLoadMore = async () => {
     const nextPage = currentPage + 1;
-    // const response = await fetch(`${api_url}/Blogs/getList?page=${nextPage}&pageSize=${pageSize}`);
+    // const response = await fetch(`${serverUrl}/Blogs/getList?page=${nextPage}&pageSize=${pageSize}`);
     // const data = await response.json();
     // setBlogs((prevBlogs) => [...prevBlogs, ...data.blogs]);
     setCurrentPage(nextPage);

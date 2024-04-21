@@ -24,7 +24,7 @@ const Summary = () => {
   //   }, [searchParams, removeAll]);
 
   const totalPrice = items.reduce((total, item) => {
-    return total + Number(item.price);
+    return item.quantity ? total + Number(item.price * item.quantity) : total + Number(item.price);
   }, 0);
 
   const onCheckout = async () => {
@@ -37,10 +37,27 @@ const Summary = () => {
 
   return (
     <div className="rounded-lg border p-6 md:col-span-3 bg-background h-fit">
-      <h2 className="text-lg font-medium">Đơn hàng</h2>
+      <div className="flex items-center justify-between">
+        <h2 className="text-lg font-bold">Đơn hàng</h2>
+        <Button onClick={removeAll} size={"sm"} variant={"link"} className="px-0">
+          Xóa tất cả
+        </Button>
+      </div>
       <div className="mt-6 space-y-4">
-        <div className="flex items-center justify-between border-t border-gray-200 pt-4">
-          <div className="text-base font-medium">Tổng cộng</div>
+        {items.map((item) => (
+          <div key={item.id} className="flex justify-between border-b border-gray-200 pb-4">
+            <div className="flex items-center">
+              <div className="ml-4">
+                <h3 className="text-sm font-medium line-clamp-3 ">{item.title}</h3>
+              </div>
+            </div>
+            <div className="ml-4 flex shrink-0 items-baseline">
+              {item.quantity ? item.quantity : 1} {" x "} <Currency value={item.price} />
+            </div>
+          </div>
+        ))}
+        <div className="flex items-center justify-between pt-4">
+          <div className="text-base font-bold">Tổng cộng</div>
           <Currency value={totalPrice} />
         </div>
       </div>
