@@ -1,82 +1,220 @@
-"use client";
-import React, { useState, useEffect, Suspense } from "react";
+import React, { Suspense } from "react";
 import { Product } from "@/interfaces/product";
-import { useParams } from "next/navigation";
 import Image from "next/image";
-import { Skeleton } from "@/components/ui/skeleton";
 import Loading from "./loading";
-import Link from "next/link";
-import { buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
+import ListProduct from "@/components/pages/Home/ListProduct";
+import { Metadata } from "next";
+import Currency from "@/components/ui/currency";
+import { ShoppingCart } from "lucide-react";
+import ProductCardAction from "@/components/pages/Products/ProductCardAction";
+import ProductImage from "@/components/pages/Products/ProductImage";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-const ProductDetailPage = () => {
-  const [product, setProduct] = useState<Product | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const { slug } = useParams();
+import { Slash } from "lucide-react";
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      setIsLoading(true);
-      if (!slug) return;
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
-      try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/products/${slug}`);
-        const foundProduct = await response.json();
-        // const foundProduct = data.find((product: Product) => product.id === slug);
-        setProduct(foundProduct);
-      } catch (error) {
-        console.error("Error fetching product:", error);
-      } finally {
-        setIsLoading(false);
-      }
+const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL
+  ? process.env.NEXT_PUBLIC_SERVER_URL
+  : "http://localhost:3000";
+const type = process.env.NEXT_PUBLIC_SERVER_URL ? "server" : "local";
+
+interface ProductProps {
+  params: {
+    slug: string;
+  };
+}
+
+// export async function generateStaticParams() {
+//   const response = await fetch(
+//     // `${serverUrl}/Product/getList?type=${type}`
+//     `https://fakestoreapi.com/products`
+//   );
+//   const data: Product[] = await response.json();
+//   console.log("🚀 ~ generateStaticParams ~ data:", data);
+//   return data
+//     .map((product: Product) => ({
+//       slug: product.id, // or slug
+//     }))
+//     .slice(0, 10);
+// }
+
+export async function generateMetadata({ params: { slug } }: ProductProps): Promise<Metadata> {
+  const response = await fetch(`${serverUrl}/Product/getOneSlug/${slug}?type=${type}`);
+  // const response = await fetch(`https://fakestoreapi.com/products/${slug}`);
+  const productData: Product = await response.json();
+  if (!productData) {
+    return {
+      title: "Bài viết không tồn tại",
+      description: "Bài viết không tồn tại",
     };
+  }
+  return {
+    title: productData.productName,
+    description: productData.description,
+    openGraph: {
+      title: productData.productName,
+      description: productData.description,
+    },
+  };
+}
 
-    fetchProduct();
-  }, [slug]);
+const ProductDetailPage = async ({ params: { slug } }: ProductProps) => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/Product/getOneSlug/${slug}?type=${type}`
+    // `https://fakestoreapi.com/products/${slug}`
+  );
+  const product: Product = await response.json();
+  // const foundProduct = data.find((product: Product) => product.id === slug);
 
   const content = (
-    <div className="space-y-6 pt-6 max-w-screen-lg mx-auto">
-      <h1 className="text-center text-3xl font-black">{product?.title}</h1>
-      <Image
-        src={product?.image || "/og-image.jpg"}
-        alt={product?.title || "Product Loa Tại Xưởng"}
-        width={1200}
-        height={600}
-        className="rounded-lg max-w-full aspect-video md:aspect-[5/2] object-cover shadow-lg border"
-      />
+    <div className="">
+      <div className="grid lg:grid-cols-5 gap-8">
+        <ProductImage product={product} className="lg:col-span-3" />
+        <div className="flex flex-col gap-4 lg:col-span-2">
+          <h2 className="text-3xl font-bold">{product.productName}</h2>
+          <p className="text-slate-500">{product.description}</p>
+          <Currency className="text-2xl font-bold text-slate-700" value={product.price || 0} />
+          <ProductCardAction className="mt-auto lg:pb-4" size="lg" product={product} />
+        </div>
+      </div>
       {/* Assuming 'adapter' is the intended property for displaying update date */}
-      <p className="text-center">Ngày cập nhật: {product?.adapter || ""}</p>
     </div>
+  );
+  const breadcrumb = (
+    <Breadcrumb className="w-full">
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/">Trang chủ</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator>
+          <Slash />
+        </BreadcrumbSeparator>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/products">Sản phẩm</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator>
+          <Slash />
+        </BreadcrumbSeparator>
+        <BreadcrumbItem>
+          <BreadcrumbPage>{product.productName}</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+  );
+  const tabData = [
+    {
+      value: "information",
+      title: "Thông tin chung",
+      content: [
+        {
+          value: product.description,
+          title: "Mô tả",
+        },
+        {
+          value: product.brand,
+          title: "Nhãn hàng",
+        },
+        {
+          value: product.model,
+          title: "Model",
+        },
+        {
+          value: product.colorImg,
+          title: "Màu sắc",
+        },
+        {
+          value: product.material,
+          title: "Chất liệu",
+        },
+        {
+          value: product.weight,
+          title: "Cân nặng",
+        },
+        {
+          value: product.length,
+          title: "Chiều dài",
+        },
+        {
+          value: product.width,
+          title: "Chiều rộng",
+        },
+        {
+          value: product.height,
+          title: "Chiều cao",
+        },
+      ],
+    },
+    {
+      value: "specifications",
+      title: "Thuộc tính",
+      content: [
+        {
+          value: product.power,
+          title: "Nguồn vào",
+        },
+        // "power",
+        // "adapter",
+        // "timeIsBattery",
+        // "timeIsUse",
+        // "manySpeaker",
+        // "manyBass",
+        // "treble",
+        // "connectWireless",
+        // "connectMicroWireless",
+        // "connectOther",
+        // "portWiredMicro",
+        // "frequency",
+      ],
+    },
+    {
+      value: "reviews",
+      title: "Đánh giá",
+      // content: ["rating", "reviews"],
+    },
+  ];
+  const tabs = (
+    <Tabs defaultValue="information" className="w-full transition-all duration-300">
+      <TabsList>
+        {tabData.map((tab, index) => (
+          <TabsTrigger className="text-xl" key={tab.value + index} value={tab.value}>
+            {tab.title}
+          </TabsTrigger>
+        ))}
+      </TabsList>
+      {tabData.map((tab) => (
+        <TabsContent className="mt-6 text-lg" key={tab.value} value={tab.value}>
+          <div className="flex flex-col gap-4">
+            {tab.content?.map((content, index) => (
+              <p className="text-slate-600" key={content?.value + content?.title}>
+                <span className="font-bold">{content?.title} : </span>
+                {content?.value}
+              </p>
+            ))}
+          </div>
+        </TabsContent>
+      ))}
+    </Tabs>
   );
 
   return (
     <Suspense fallback={<Loading />}>
-      <div className="z-[5] h-full w-full">
-        <div className="space-y-2 p-4 md:p-8">
-          {isLoading ? (
-            <Skeleton className="text-center h-6"></Skeleton>
-          ) : product ? (
-            content
-          ) : (
-            <div className="flex flex-col items-center gap-4">
-              <div className="bg-gradient-to-l from-neutral-900 via-neutral-500 via-70% to-neutral-200 bg-clip-text text-center text-4xl font-bold text-transparent dark:from-neutral-50 dark:to-slate-800 md:text-5xl lg:text-6xl !leading-normal">
-                Sản phẩm không tồn tại
-              </div>
-              <div className="flex flex-col items-center text-4xl font-bold gap-2 text-slate-500 dark:text-neutral-300">
-                <div className="">😢</div>
-                {/* back to Product */}
-                <Link
-                  href={"/products"}
-                  className={buttonVariants({
-                    size: "lg",
-                    className: "!text-xl !font-bold",
-                  })}
-                >
-                  Quay lại sản phẩm
-                </Link>
-              </div>
-            </div>
-          )}
-        </div>
+      <div className="relative z-[5] mx-auto h-full min-h-[calc(100svh-104px)] w-full max-w-7xl items-center gap-6 px-4 lg:px-8 flex flex-col mb-14 md:mb-16 lg:mb-20">
+        {breadcrumb}
+        {content}
+        <h3 className="bg-gradient-to-r from-slate-500 to-slate-950 bg-clip-text text-3xl w-full font-bold !leading-normal text-transparent dark:from-neutral-700 dark:to-neutral-100 md:text-4xl">
+          Thông tin sản phẩm
+        </h3>
+        {tabs}
+        <ListProduct />
       </div>
     </Suspense>
   );

@@ -25,8 +25,8 @@ export default async function Image({ params }: { params: { slug: string } }) {
     (
       <div
         style={{
-          fontSize: 60,
-          background: `url(${blogData?.imageUrl}) #00000030`,
+          fontSize: 100,
+          backgroundImage: `url("${blogData?.imageUrl}"), #00000030`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",

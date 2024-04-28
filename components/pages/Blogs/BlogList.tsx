@@ -79,7 +79,7 @@ const BlogList = () => {
                   <Skeleton className="bg-slate-950/10 h-6"></Skeleton>
                 </div>
               ))
-          : blogFiltered.map((blog, index) => (
+          : blogFiltered.map((blog, index: number) => (
               <BlogItem
                 className={(index > 4 && index % 5 == 0) || index == 0 ? "lg:col-span-2" : ""}
                 key={blog.id}

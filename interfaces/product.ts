@@ -1,5 +1,6 @@
 export type Product = {
   id: string;
+  slug: string;
   title: string;
   category: string;
   description: string;
@@ -27,7 +28,8 @@ export type Product = {
   price: number;
   quantity: number;
   status: StatusProduct["id"];
-  image: Image["url"];
+  images: Image["url"][];
+  imageUrls: string;
 };
 
 export type Image = {

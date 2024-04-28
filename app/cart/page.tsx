@@ -46,18 +46,20 @@ const CartPage = () => {
         </div>
       ) : (
         <>
-          <h1 className="bg-gradient-to-r from-slate-500 to-slate-950 bg-clip-text text-3xl font-bold !leading-relaxed text-transparent dark:from-neutral-700 dark:to-neutral-100 md:text-4xl">
+          <h1 className="bg-gradient-to-r from-slate-500 to-slate-950 bg-clip-text text-3xl font-bold !leading-relaxed text-transparent dark:from-neutral-700 dark:to-neutral-100 md:text-5xl lg:text-6xl">
             Giỏ hàng
           </h1>
-          <div className="mt-12 grid md:grid-cols-8 gap-10">
-            <div className="md:col-span-5">
+          <div className="relative mt-6 grid lg:grid-cols-8 gap-10 w-full">
+            <div className="lg:col-span-5">
               <ul className="space-y-6">
                 {cart.items.map((item) => (
                   <CartItem key={item.id} data={item} />
                 ))}
               </ul>
             </div>
-            <Summary />
+            <div className="lg:col-span-3">
+              <Summary />
+            </div>
           </div>
         </>
       )}

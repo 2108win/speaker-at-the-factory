@@ -20,15 +20,16 @@ const type = process.env.NEXT_PUBLIC_SERVER_URL ? "server" : "local";
 export async function generateStaticParams() {
   const response = await fetch(`${serverUrl}/Blog/getList?type=${type}`);
   const data: Blog[] = await response.json();
-  return data
-    .map((blog: Blog) => ({
-      slug: blog.id,
-    }))
-    .slice(0, 10);
+  return data.map((blog: Blog) => ({
+    slug: blog.slug,
+  }));
 }
 export async function generateMetadata({ params: { slug } }: BlogProps): Promise<Metadata> {
-  const response = await fetch(`${serverUrl}/Blog/getOne/${slug}?type=${type}`);
+  const response = await fetch(`${serverUrl}/Blog/getOneSlug/${slug}?type=${type}`);
   const blogData = await response.json();
+  // const response = await fetch(`${serverUrl}/Blog/getList?type=${type}`);
+  // const data: Blog[] = await response.json();
+  // const blogData = data.find((blog: Blog) => blog.slug === slug);
   if (!blogData) {
     return {
       title: "Bài viết không tồn tại",
@@ -37,26 +38,31 @@ export async function generateMetadata({ params: { slug } }: BlogProps): Promise
   }
   return {
     title: blogData.title,
-    description: blogData.content,
+    description: blogData.description,
     openGraph: {
       title: blogData.title,
-      description: blogData.content,
+      description: blogData.description,
     },
   };
 }
 
 const BlogDetailPage = async ({ params: { slug } }: BlogProps) => {
-  const response = await fetch(`${serverUrl}/Blog/getOne/${slug}?type=${type}`);
-  const blogData: Blog = await response.json();
-
+  const response = await fetch(`${serverUrl}/Blog/getOneSlug/${slug}?type=${type}`);
+  const blogData = await response.json();
+  // const response = await fetch(`${serverUrl}/Blog/getList?type=${type}`);
+  // const data: Blog[] = await response.json();
+  // const blog = data.find((blog: Blog) => blog.slug === slug);
+  // const blogData = await fetch(`${serverUrl}/Blog/getOne/${blog?.id}?type=${type}`).then((res) =>
+  //   res.json()
+  // );
   if (!blogData) {
-    return <div>Bài viết không tồn tại</div>;
+    return <div>Blog not found</div>;
   }
 
   const content = (
     <span
       className="mx-auto block max-w-7xl [&>*]:leading-7 [&>p>img]:mx-auto [&>p>img]:my-4 [&>p>img]:aspect-video [&>p>img]:max-w-4xl [&>p>img]:rounded-md [&>p>img]:border-2 [&>p>img]:border-gray-300 [&>p>img]:object-cover [&>p>img]:drop-shadow-lg [&>p]:text-lg [&>p]:font-normal [&>p]:text-slate-900 dark:[&>p]:text-neutral-100"
-      dangerouslySetInnerHTML={{ __html: blogData.content }}
+      dangerouslySetInnerHTML={{ __html: blogData?.content }}
     />
   );
 
@@ -73,6 +79,7 @@ const BlogDetailPage = async ({ params: { slug } }: BlogProps) => {
               alt={blogData.title}
               width={1200}
               height={600}
+              priority
               className="rounded-lg max-w-full aspect-video md:aspect-[5/2] object-cover shadow-lg border"
             />
             {content}

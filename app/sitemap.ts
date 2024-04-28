@@ -1,7 +1,7 @@
 import { Blog } from "@/interfaces/blog";
 import { MetadataRoute } from "next";
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://loataixuong.com";
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5000";
 const type = process.env.NEXT_PUBLIC_SERVER_URL ? "server" : "local";
 
@@ -10,7 +10,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const blogs: Blog[] = await blogsData.json();
 
   const blogEntries = blogs.map((blog: Blog) => ({
-    url: `${baseUrl}/blogs/${blog.id}`,
+    url: `${baseUrl}/blogs/${blog.slug}`,
     lastModified: new Date(blog.createdAt),
   }));
 

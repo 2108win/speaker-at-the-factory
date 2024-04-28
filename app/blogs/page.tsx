@@ -3,6 +3,7 @@ import BlogList from "@/components/pages/Blogs/BlogList";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://loataixuong.com"),
   title: "Blogs",
   description: "Blogs mới nhất từ Loa Tại Xưởng, cập nhật bài viết nhanh nhất về loa và công nghệ.",
 };

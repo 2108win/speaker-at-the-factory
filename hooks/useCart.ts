@@ -28,7 +28,7 @@ const useCart = create(
           });
         }
 
-        set({ items: [...get().items, data] });
+        set({ items: [...get().items, { ...data, quantity: 1 }] });
         toast.success("Sản phẩm đã được thêm vào giỏ hàng.", {
           action: {
             label: "Xem giỏ hàng",
@@ -37,10 +37,32 @@ const useCart = create(
         });
       },
       removeItem: (id: string) => {
+        const currentItems = get().items;
+        const tempItems = currentItems.find((item) => item.id === id);
         set({ items: [...get().items.filter((item) => item.id !== id)] });
-        toast.success("Sản phẩm đã được xóa khỏi giỏ hàng.");
+        toast.success(`Sản phẩm ${tempItems?.productName} đã được xóa khỏi giỏ hàng.`, {
+          action: {
+            label: tempItems ? "Hoàn tác" : "Tới trang sản phẩm",
+            onClick: () => {
+              tempItems
+                ? set({ items: [...get().items, tempItems] })
+                : set({ items: [...currentItems] });
+            },
+          },
+        });
       },
-      removeAll: () => set({ items: [] }),
+      removeAll: () => {
+        const tempItems = get().items;
+        set({ items: [] });
+        toast.success(`Tất cả sản phẩm đã được xóa khỏi giỏ hàng.`, {
+          action: {
+            label: "Hoàn tác",
+            onClick: () => {
+              tempItems && set({ items: [...tempItems] });
+            },
+          },
+        });
+      },
       updateItem: (id: string, quantity: number) => {
         set({ items: get().items.map((item) => (item.id === id ? { ...item, quantity } : item)) });
       },

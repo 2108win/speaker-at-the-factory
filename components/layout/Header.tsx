@@ -70,8 +70,8 @@ const Header = (props: Props) => {
   const currentPathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 mx-auto w-full max-w-7xl p-4">
-      <div className="flex items-center justify-between rounded-lg bg-neutral-50/50 p-4 backdrop-blur-md dark:bg-slate-950/30">
+    <header className="sticky top-0 z-50 mx-auto w-full max-w-7xl p-1 md:p-4">
+      <div className="flex items-center justify-between rounded-lg bg-neutral-50/50 p-2 md:p-4 backdrop-blur-md dark:bg-slate-950/30">
         <Logo />
         <div className="hidden w-fit gap-2 lg:flex mx-auto">
           <NavigationMenu>
@@ -112,7 +112,7 @@ const Header = (props: Props) => {
                       <NavigationMenuLink
                         className={buttonVariants({
                           variant: currentPathname === href ? "outline" : "link",
-                          className: "!text-lg dark:text-neutral-50",
+                          className: "!text-lg dark:text-neutral-50 text-black",
                         })}
                       >
                         {title}
@@ -128,7 +128,7 @@ const Header = (props: Props) => {
         {/* <div className="hidden items-center gap-2 lg:flex">
           <Button>Đăng nhập</Button>
         </div> */}
-        <div className="flex ml-auto">
+        <div className="flex ml-auto gap-2">
           <NavbarActions />
           <Sheet>
             <SheetTrigger

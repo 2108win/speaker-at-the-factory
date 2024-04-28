@@ -6,6 +6,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "next/navigation";
 import ProductCard from "./ProductCard";
 import { Button } from "@/components/ui/button";
+
+const serverURL = process.env.NEXT_PUBLIC_SERVER_URL;
+
 const ProductList = () => {
   const [product, setProduct] = useState<Product[]>([]);
   const [productFiltered, setProductFiltered] = useState<Product[]>(product);
@@ -13,18 +16,16 @@ const ProductList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [isLoading, setIsLoading] = useState(true);
-  console.log(process.env);
 
   useEffect(() => {
     const fetchProduct = async () => {
       setIsLoading(true);
       const response = await fetch(
+        `${serverURL}/Product/getList`
         // `${api_url}/Product/getList?page=${currentPage}&pageSize=${pageSize}`
-        // `https://3781d0d8f2c44f49963604fb003202b5.api.mockbin.io/`
-        `https://fakestoreapi.com/products`
+        // `https://fakestoreapi.com/products`
       );
       const data = await response.json();
-      console.log("🚀 ~ fetchProduct ~ data:", data);
       setProduct(data);
       setProductFiltered(data);
       setIsLoading(false);
@@ -67,9 +68,9 @@ const ProductList = () => {
           />
         )}
       </div>
-      <ul className="grid grid-cols-1 w-full gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <ul className="grid grid-cols-1 w-full gap-8 md:grid-cols-2 lg:grid-cols-3">
         {isLoadingSearch || isLoading
-          ? Array(5)
+          ? Array(3)
               .fill(0)
               .map((_, idx) => (
                 <div key={idx} className="space-y-4">

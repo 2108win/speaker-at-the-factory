@@ -11,36 +11,9 @@ import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import ProductCard from "../Products/ProductCard";
 import { Product } from "@/interfaces/product";
+import { cn } from "@/lib/utils";
 
-// const dataProduct = [
-//   {
-//     price: "5.500.000 VNĐ",
-//     title: "Loa xách tay",
-//     category: "Loa to",
-//     description:
-//       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe corrupti soluta minima aliquam, animi earum rem vitae repellat obcaecati quaerat ipsam unde laudantium adipisci dolores. Praesentium possimus expedita facilis ut.",
-//     image: "/product_1.png",
-//     tag: "Bán chạy",
-//   },
-//   {
-//     price: "3.500.000 VNĐ",
-//     title: "Loa để bàn",
-//     category: "Loa nhỏ",
-//     description:
-//       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe corrupti soluta minima aliquam, animi earum rem vitae repellat obcaecati quaerat ipsam unde laudantium adipisci dolores. Praesentium possimus expedita facilis ut.",
-//     image: "/product_2.png",
-//     tag: "Giảm giá",
-//   },
-//   {
-//     price: "4.500.000 VNĐ",
-//     title: "Loa Marshall",
-//     category: "Loa to",
-//     description:
-//       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe corrupti soluta minima aliquam, animi earum rem vitae repellat obcaecati quaerat ipsam unde laudantium adipisci dolores. Praesentium possimus expedita facilis ut.",
-//     image: "/product_3.png",
-//     tag: "Mới",
-//   },
-// ];
+const serverURL = process.env.NEXT_PUBLIC_SERVER_URL;
 
 const ListProduct = () => {
   const [product, setProduct] = useState<Product[]>([]);
@@ -48,8 +21,8 @@ const ListProduct = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       setIsLoading(true);
-      const response = await fetch(`https://fakestoreapi.com/products?limit=5`);
-      const data = await response.json();
+      const response = await fetch(`${serverURL}/Product/getList`);
+      const data: Product[] = await response.json();
       setProduct(data);
       setIsLoading(false);
     };
@@ -81,7 +54,7 @@ const ListProduct = () => {
         }}
         className="mx-auto w-full max-w-[calc(100dvw-56px)] md:max-w-3xl lg:max-w-none"
       >
-        <CarouselContent>
+        <CarouselContent className={cn(product.length < 3 && "md:justify-center")}>
           {product.map((product, index) => (
             <CarouselItem key={index} className="w-full pl-4 md:basis-1/2 lg:basis-1/3">
               <div className="p-1">
@@ -90,8 +63,18 @@ const ListProduct = () => {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="-left-1 md:-left-3" />
-        <CarouselNext className="-right-1 md:-right-3" />
+        <CarouselPrevious
+          className={cn(
+            "-left-1 md:-left-3",
+            product.length < 3 ? "md:hidden" : product.length < 2 ? "sm:hidden" : ""
+          )}
+        />
+        <CarouselNext
+          className={cn(
+            "-right-1 md:-right-3",
+            product.length < 3 ? "md:hidden" : product.length < 2 ? "sm:hidden" : ""
+          )}
+        />
       </Carousel>
     </div>
   );

@@ -36,7 +36,7 @@ const Summary = () => {
   };
 
   return (
-    <div className="rounded-lg border p-6 md:col-span-3 bg-background h-fit">
+    <div className="rounded-lg border p-6 bg-background h-fit w-full">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-bold">Đơn hàng</h2>
         <Button onClick={removeAll} size={"sm"} variant={"link"} className="px-0">
@@ -48,11 +48,14 @@ const Summary = () => {
           <div key={item.id} className="flex justify-between border-b border-gray-200 pb-4">
             <div className="flex items-center">
               <div className="ml-4">
-                <h3 className="text-sm font-medium line-clamp-3 ">{item.title}</h3>
+                <h3 className="text-sm font-medium line-clamp-3 ">
+                  {(item.quantity ? item.quantity : 1) + " x "}
+                  {item.title}
+                </h3>
               </div>
             </div>
             <div className="ml-4 flex shrink-0 items-baseline">
-              {item.quantity ? item.quantity : 1} {" x "} <Currency value={item.price} />
+              <Currency value={item.price * item.quantity} />
             </div>
           </div>
         ))}
