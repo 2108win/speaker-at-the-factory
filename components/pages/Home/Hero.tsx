@@ -1,18 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { ProductCardActionHome } from "../Products/ProductCardAction";
+import { Product } from "@/interfaces/product";
+const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
-type Props = {};
-
-const dataProduct = {
-  price: "4.500.000 VNĐ",
-  title: "Loa xách tay",
-  description:
-    "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe corrupti soluta minima aliquam, animi earum rem vitae repellat obcaecati quaerat ipsam unde laudantium adipisci dolores. Praesentium possimus expedita facilis ut.",
-  image: "/hero_product.png",
-};
-
-const Hero = (props: Props) => {
+const Hero = async () => {
+  const res = await fetch(`${serverUrl}/Product/getOneSlug/loa-da-ngoai-xam-t-288?type=server`);
+  const dataProduct: Product = await res.json();
   return (
     <div className="relative z-[5] mx-auto grid h-full min-h-[calc(100dvh-104px)] max-w-7xl grid-cols-1 items-center gap-6 px-4 lg:grid-cols-2 lg:px-8">
       <div className="z-10 flex flex-col gap-4 text-center lg:text-left">
@@ -25,7 +20,7 @@ const Hero = (props: Props) => {
         <div className="mx-auto mt-8 lg:mx-0">
           <button className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
             <span className="absolute inset-[-1000%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#000000_0%,#555555_50%,#ffffff_100%)] dark:bg-[conic-gradient(from_90deg_at_50%_50%,#ffffff_0%,#555555_50%,#000000_100%)]" />
-            <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950/10 px-8 py-4 text-lg font-medium text-white backdrop-blur-lg hover:bg-slate-900/70 dark:bg-neutral-50/10 hover:dark:bg-slate-950/70">
+            <span className="z-10 inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950/10 px-8 py-4 text-lg font-medium text-white backdrop-blur-lg hover:bg-slate-900/70 dark:bg-neutral-50/10 hover:dark:bg-slate-950/70">
               Xem thêm
             </span>
           </button>
@@ -35,7 +30,7 @@ const Hero = (props: Props) => {
         <div className="relative mx-auto aspect-[4/3] w-full md:max-w-md">
           <Image
             className="h-full w-full object-cover"
-            src={dataProduct.image}
+            src={dataProduct.images[0]}
             alt={dataProduct.title}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw"
@@ -58,20 +53,7 @@ const Hero = (props: Props) => {
               Xem thêm
             </Link>
           </div>
-          <div className="mt-8 flex flex-col items-center gap-4 md:flex-row">
-            <button className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
-              <span className="absolute inset-[-1000%] animate-[spin_5s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#000000_0%,#555555_50%,#ffffff_100%)] dark:bg-[conic-gradient(from_90deg_at_50%_50%,#ffffff_0%,#555555_50%,#000000_100%)]" />
-              <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-black/10 px-8 py-4 text-lg font-medium text-neutral-50 backdrop-blur-lg hover:bg-slate-900/70 dark:bg-neutral-50/10 hover:dark:bg-black/70">
-                Mua ngay
-              </span>
-            </button>
-            <button className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
-              <span className="absolute inset-[-1000%] animate-[spin_10s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#000000_0%,#555555_50%,#ffffff_100%)] dark:bg-[conic-gradient(from_90deg_at_50%_50%,#ffffff_0%,#555555_50%,#000000_100%)]" />
-              <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-neutral-50 px-8 py-4 text-lg font-medium text-slate-950 backdrop-blur-lg hover:bg-slate-900/70 dark:bg-black dark:text-neutral-50 hover:dark:bg-black/70">
-                Thêm vào giỏ hàng
-              </span>
-            </button>
-          </div>
+          <ProductCardActionHome product={dataProduct} />
         </div>
       </div>
     </div>

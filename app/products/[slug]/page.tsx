@@ -7,7 +7,6 @@ import ListProduct from "@/components/pages/Home/ListProduct";
 import { Metadata } from "next";
 import Currency from "@/components/ui/currency";
 import { ShoppingCart } from "lucide-react";
-import ProductCardAction from "@/components/pages/Products/ProductCardAction";
 import ProductImage from "@/components/pages/Products/ProductImage";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -21,6 +20,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { ProductCardAction } from "@/components/pages/Products/ProductCardAction";
 
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL
   ? process.env.NEXT_PUBLIC_SERVER_URL
