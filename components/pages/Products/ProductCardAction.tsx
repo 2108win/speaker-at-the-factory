@@ -23,7 +23,7 @@ const ProductCardAction = ({ product, size, className }: Props) => {
     });
   };
   return (
-    <div className={`flex gap-4 mt-4 ${className}`}>
+    <div className={`flex flex-col sm:flex-row gap-4 mt-4 ${className}`}>
       <Button onClick={onAddToCart} size={size} className="w-full">
         Thêm vào giỏ hàng
         <ShoppingCart className="ml-4" size={20} />

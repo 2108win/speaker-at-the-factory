@@ -31,13 +31,13 @@ const ListProduct = async () => {
   // }, []);
   return (
     <div className="mt-layout-screen z-[1] mx-auto grid w-full max-w-7xl items-center gap-6 px-4">
-      <div className="flex items-center justify-between w-full">
+      <div className="flex flex-wrap gap-2 items-center justify-between w-full">
         <h3 className="bg-gradient-to-r from-slate-500 to-slate-950 bg-clip-text text-3xl font-bold !leading-normal text-transparent dark:from-neutral-700 dark:to-neutral-100 md:text-4xl">
           Sản phẩm nổi bật
         </h3>
         <Link
           href={"/products"}
-          className="relative h-10 w-fit overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+          className="relative h-10 w-fit overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 flex-none"
         >
           <span className="absolute inset-[-1000%] animate-[spin_5s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#ffffff_0%,#555555_50%,#ffffff_100%)] dark:bg-[conic-gradient(from_90deg_at_50%_50%,#000000_0%,#555555_50%,#000000_100%)]" />
           <span

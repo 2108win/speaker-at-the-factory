@@ -58,13 +58,15 @@ function ProductImage({ product, className }: Props) {
           className={cn("right-2 hover:scale-110", product.images.length < 2 && "hidden")}
         />
       </Carousel> */}
-      <Image
-        src={product.images[currentImage]}
-        alt={product.productName + " - " + currentImage}
-        width={1000}
-        height={1000}
-        className="rounded-lg h-auto w-full object-cover object-center shadow-lg border transition-all duration-300"
-      />
+      <div className="max-h-[350px] md:max-h-[450px] h-auto">
+        <Image
+          src={product.images[currentImage]}
+          alt={product.productName + " - " + currentImage}
+          width={1000}
+          height={1000}
+          className="rounded-lg h-full aspect-auto object-contain object-center shadow-lg border transition-all duration-300"
+        />
+      </div>
       <div className="flex gap-4 items-center w-full flex-nowrap overflow-x-auto py-4">
         {product.images.map((image: string, index: number) => (
           <Image
@@ -75,7 +77,7 @@ function ProductImage({ product, className }: Props) {
             height={150}
             onClick={() => setCurrentImage(index)}
             className={cn(
-              "rounded-md h-auto w-[150px] object-contain border cursor-pointer hover:shadow-lg transition-all duration-300",
+              "rounded-md h-[100px] w-auto object-contain border cursor-pointer hover:shadow-lg transition-all duration-300",
               currentImage === index ? "border-4 border-red-500 border-spacing-3" : ""
             )}
           />

@@ -155,18 +155,54 @@ const ProductDetailPage = async ({ params: { slug } }: ProductProps) => {
           value: product.power,
           title: "Nguồn vào",
         },
-        // "power",
-        // "adapter",
-        // "timeIsBattery",
-        // "timeIsUse",
-        // "manySpeaker",
-        // "manyBass",
-        // "treble",
-        // "connectWireless",
-        // "connectMicroWireless",
-        // "connectOther",
-        // "portWiredMicro",
-        // "frequency",
+        {
+          value: product.adapter,
+          title: "Điều kiển",
+        },
+        {
+          value: product.timeIsBattery,
+          title: "Thời lường pin",
+        },
+        {
+          value: product.timeIsUse,
+          title: "Thời gian sử dụng",
+        },
+        {
+          value: product.timeIsUse,
+          title: "Thực tế sử dụng",
+        },
+        {
+          value: product.manySpeaker,
+          title: "Số lượng loa",
+        },
+        {
+          value: product.manyBass,
+          title: "Số lượng bass",
+        },
+        {
+          value: product.treble,
+          title: "Số lượng treble",
+        },
+        {
+          value: product.connectWireless,
+          title: "Kết nối không dây",
+        },
+        {
+          value: product.connectMicroWireless,
+          title: "Kết nối micro",
+        },
+        {
+          value: product.connectOther,
+          title: "Kết nối khác",
+        },
+        {
+          value: product.portWiredMicro,
+          title: "Cổng sử dụng micro",
+        },
+        {
+          value: product.frequency,
+          title: "Tồn kho",
+        },
       ],
     },
     {
@@ -177,7 +213,7 @@ const ProductDetailPage = async ({ params: { slug } }: ProductProps) => {
   ];
   const tabs = (
     <Tabs defaultValue="information" className="w-full transition-all duration-300">
-      <TabsList>
+      <TabsList className="flex-wrap justify-start box-decoration-clone">
         {tabData.map((tab, index) => (
           <TabsTrigger className="text-xl" key={tab.value + index} value={tab.value}>
             {tab.title}
