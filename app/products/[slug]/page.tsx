@@ -33,19 +33,13 @@ interface ProductProps {
   };
 }
 
-// export async function generateStaticParams() {
-//   const response = await fetch(
-//     // `${serverUrl}/Product/getList?type=${type}`
-//     `https://fakestoreapi.com/products`
-//   );
-//   const data: Product[] = await response.json();
-//   console.log("🚀 ~ generateStaticParams ~ data:", data);
-//   return data
-//     .map((product: Product) => ({
-//       slug: product.id, // or slug
-//     }))
-//     .slice(0, 10);
-// }
+export async function generateStaticParams() {
+  const response = await fetch(`${serverUrl}/Product/getList`);
+  const data: Product[] = await response.json();
+  return data.map((product: Product) => ({
+    slug: product.slug,
+  }));
+}
 
 export async function generateMetadata({ params: { slug } }: ProductProps): Promise<Metadata> {
   const response = await fetch(`${serverUrl}/Product/getOneSlug/${slug}?type=${type}`);
@@ -83,7 +77,7 @@ const ProductDetailPage = async ({ params: { slug } }: ProductProps) => {
           <h2 className="text-3xl font-bold">{product.productName}</h2>
           <p className="text-slate-500">{product.description}</p>
           <Currency className="text-2xl font-bold text-slate-700" value={product.price || 0} />
-          <ProductCardAction className="mt-auto lg:pb-4" size="lg" product={product} />
+          <ProductCardAction className="mt-8" size="lg" product={product} />
         </div>
       </div>
       {/* Assuming 'adapter' is the intended property for displaying update date */}

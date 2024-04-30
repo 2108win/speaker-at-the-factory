@@ -29,7 +29,6 @@ export type Product = {
   quantity: number;
   status: StatusProduct["id"];
   images: Image["url"][];
-  imageUrls: string;
 };
 
 export type Image = {

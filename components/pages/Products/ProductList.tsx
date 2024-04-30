@@ -86,11 +86,11 @@ const ProductList = () => {
               </li>
             ))}
       </ul>
-      {product?.length == 0 && (
+      {/* {product?.length == 0 && (
         <Button variant="secondary" size="lg" onClick={handleLoadMore} disabled={isLoading}>
           {isLoading ? "Đang tải" : "Tải thêm"}
         </Button>
-      )}
+      )} */}
     </div>
   );
 };

@@ -1,5 +1,4 @@
-"use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   Carousel,
   CarouselContent,
@@ -15,19 +14,21 @@ import { cn } from "@/lib/utils";
 
 const serverURL = process.env.NEXT_PUBLIC_SERVER_URL;
 
-const ListProduct = () => {
-  const [product, setProduct] = useState<Product[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  useEffect(() => {
-    const fetchProduct = async () => {
-      setIsLoading(true);
-      const response = await fetch(`${serverURL}/Product/getList`);
-      const data: Product[] = await response.json();
-      setProduct(data);
-      setIsLoading(false);
-    };
-    fetchProduct();
-  }, []);
+const ListProduct = async () => {
+  const res = await fetch(`${serverURL}/Product/getList`);
+  const product: Product[] = await res.json();
+  // const [product, setProduct] = useState<Product[]>([]);
+  // const [isLoading, setIsLoading] = useState(false);
+  // useEffect(() => {
+  //   const fetchProduct = async () => {
+  //     setIsLoading(true);
+  //     const response = await fetch(`${serverURL}/Product/getList`);
+  //     const data: Product[] = await response.json();
+  //     setProduct(data);
+  //     setIsLoading(false);
+  //   };
+  //   fetchProduct();
+  // }, []);
   return (
     <div className="mt-layout-screen z-[1] mx-auto grid w-full max-w-7xl items-center gap-6 px-4">
       <div className="flex items-center justify-between w-full">
@@ -52,13 +53,13 @@ const ListProduct = () => {
         opts={{
           align: "start",
         }}
-        className="mx-auto w-full max-w-[calc(100dvw-56px)] md:max-w-3xl lg:max-w-none"
+        className="mx-auto grid w-fit max-w-[calc(100dvw-56px)]"
       >
         <CarouselContent className={cn(product.length < 3 && "md:justify-center")}>
           {product.map((product, index) => (
-            <CarouselItem key={index} className="w-full pl-4 md:basis-1/2 lg:basis-1/3">
-              <div className="p-1">
-                <ProductCard key={index} product={product} />
+            <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3">
+              <div className="p-1 h-full">
+                <ProductCard product={product} />
               </div>
             </CarouselItem>
           ))}

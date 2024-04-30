@@ -45,7 +45,7 @@ const CartItem: React.FC<CartItemProps> = ({ data }) => {
       </Button>
       <div className="relative rounded-md overflow-hidden bg-black/5 backdrop-blur-sm dark:bg-neutral-50/20">
         <Image
-          src={data.imageUrls || "/og-image.jpg"}
+          src={data.images[0] || "/og-image.jpg"}
           alt={data.productName}
           // alt={data.productName}
           width={200}
