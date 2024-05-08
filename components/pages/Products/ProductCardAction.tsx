@@ -2,19 +2,29 @@
 import { Button } from "@/components/ui/button";
 import useCart from "@/hooks/useCart";
 import { Product } from "@/interfaces/product";
-import { ShoppingCart } from "lucide-react";
+import { Minus, Plus, ShoppingCart } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React from "react";
+import { Input } from "@/components/ui/input";
+import React, { useState } from "react";
 
 type Props = {
   product: Product;
   size?: "sm" | "default" | "lg" | "icon";
   className?: string;
+  isMain?: boolean;
 };
 
-export const ProductCardAction = ({ product, size, className }: Props) => {
+export const ProductCardAction = ({ product, size, className, isMain }: Props) => {
+  const [quantity, setQuantity] = useState(1);
   const router = useRouter();
   const cart = useCart();
+
+  const onChangeQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (Number(e.target.value) < 1) return;
+    setQuantity(Number(e.target.value));
+    cart.updateItem(product.id, Number(e.target.value));
+  };
+
   const onAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
@@ -23,6 +33,45 @@ export const ProductCardAction = ({ product, size, className }: Props) => {
     });
   };
   return (
+    <>
+    {isMain && (
+<div className="flex items-center p-[1px] rounded-lg border border-gray-200">
+              <Button
+                variant="ghost"
+                disabled={quantity === 1}
+                size="icon"
+                onClick={() => {
+                  if (quantity > 1) {
+                    setQuantity(quantity - 1);
+                    cart.updateItem(product.id, quantity - 1);
+                  }
+                }}
+              >
+                <Minus size={20} />
+              </Button>
+              <Input
+                value={quantity}
+                onChange={onChangeQuantity}
+                className="max-w-10 text-center focus:outline-none border-none font-semibold text-black focus-visible:ring-0 focus-visible:ring-ring focus-visible:ring-offset-0"
+                min={1}
+                max={100}
+                step={1}
+                pattern="[0-9]*"
+              />
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => {
+                  if (quantity < 100) {
+                    setQuantity(quantity + 1);
+                    cart.updateItem(product.id, quantity + 1);
+                  }
+                }}
+              >
+                <Plus size={20} />
+              </Button>
+            </div>
+    )}
     <div className={`flex flex-col sm:flex-row gap-4 mt-4 ${className}`}>
       <Button onClick={onAddToCart} size={size} className="w-full">
         Thêm vào giỏ hàng
@@ -37,6 +86,7 @@ export const ProductCardAction = ({ product, size, className }: Props) => {
         Mua ngay
       </Button>
     </div>
+    </>
   );
 };
 

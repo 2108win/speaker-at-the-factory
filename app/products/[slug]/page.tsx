@@ -77,7 +77,7 @@ const ProductDetailPage = async ({ params: { slug } }: ProductProps) => {
           <h2 className="text-3xl font-bold">{product.productName}</h2>
           <p className="text-slate-500">{product.description}</p>
           <Currency className="text-2xl font-bold text-slate-700" value={product.price || 0} />
-          <ProductCardAction className="mt-8" size="lg" product={product} />
+          <ProductCardAction isMain={true} className="mt-8" size="lg" product={product} />
         </div>
       </div>
       {/* Assuming 'adapter' is the intended property for displaying update date */}

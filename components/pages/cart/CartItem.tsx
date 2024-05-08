@@ -47,7 +47,6 @@ const CartItem: React.FC<CartItemProps> = ({ data }) => {
         <Image
           src={data.images[0] || "/og-image.jpg"}
           alt={data.productName}
-          // alt={data.productName}
           width={200}
           height={200}
           className="object-contain w-[250px] h-auto object-center rounded-md shadow-md border"
