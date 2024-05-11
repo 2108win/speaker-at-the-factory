@@ -18,7 +18,9 @@ const ProductCard = ({ product, className }: Props) => {
   // const router = useRouter();
 
   return (
-    <div className={cn("flex flex-col h-full overflow-hidden group", className)}>
+    <div
+      className={cn("flex flex-col h-full overflow-hidden group", className)}
+    >
       <Link
         className="relative overflow-hidden w-full rounded-xl shadow-md flex-auto h-auto"
         href={`/products/${product.slug}`}

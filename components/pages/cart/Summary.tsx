@@ -10,7 +10,11 @@ import { AlertModal } from "@/components/modal/alert-modal";
 
 const Summary = () => {
   //   const searchParams = useSearchParams();
-  const items = useCart((state) => state.items);
+  const cart = useCart();
+  const items = useCart((state) =>
+    state.items.filter((item) => item.checked === true)
+  );
+  console.log("items===", items);
   const removeAll = useCart((state) => state.removeAll);
   const [open, setOpen] = useState(false);
 
@@ -26,15 +30,31 @@ const Summary = () => {
   //   }, [searchParams, removeAll]);
 
   const totalPrice = items.reduce((total, item) => {
-    return item.quantity ? total + Number(item.price * item.quantity) : total + Number(item.price);
+    return item.quantity
+      ? total + Number(item.price * item.quantity)
+      : total + Number(item.price);
   }, 0);
 
   const onCheckout = async () => {
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/checkout`, {
-      productIds: items.map((item) => item.id),
-    });
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
+      {
+        productIds: items.map((item) => item.id),
+      }
+    );
 
     window.location = response.data.url;
+  };
+
+  const handleReset = () => {
+    cart.items.forEach((item) => {
+      cart.checkedItem(item.id, false);
+    });
+  };
+
+  const handleAddOne = () => {
+    // cart.items[0].checked = true;
+    cart.checkedItem(cart.items[0].id, true);
   };
 
   return (
@@ -45,18 +65,29 @@ const Summary = () => {
         onConfirm={removeAll}
         loading={false}
       />
-      <div className="rounded-lg border p-6 bg-background h-fit w-full">
-        <div className="flex items-center justify-between">
-          <h2 className="text-lg font-bold">Đơn hàng</h2>
-          <Button onClick={()=>{
-            setOpen(true)
-          }} size={"sm"} variant={"link"} className="px-0">
-            Xóa tất cả
+      <div className="flex items-center justify-between mb-2">
+        <h3 className="text-2xl font-bold">Đơn hàng</h3>
+        {items.length > 0 && (
+          <Button onClick={handleReset} variant={"link"} className="text-lg">
+            Chọn lại
           </Button>
-        </div>
-        <div className="mt-6 space-y-4">
+        )}
+      </div>
+      <div className="rounded-lg border p-6 bg-background h-fit w-full">
+        <div className="space-y-4">
+          {items.length === 0 && (
+            <div className="flex justify-between border-b items-center border-gray-200 pb-4 gap-4">
+              <p className="text-balance">
+                Hãy chọn ít nhất một sản phẩm để thanh toán
+              </p>
+              <Button onClick={handleAddOne}>Thêm sản phẩm</Button>
+            </div>
+          )}
           {items.map((item) => (
-            <div key={item.id} className="flex justify-between border-b border-gray-200 pb-4">
+            <div
+              key={item.id}
+              className="flex justify-between border-b border-gray-200 pb-4"
+            >
               <div className="flex items-center">
                 <div className="ml-4">
                   <h3 className="text-sm font-medium line-clamp-3 ">
@@ -75,7 +106,11 @@ const Summary = () => {
             <Currency value={totalPrice} />
           </div>
         </div>
-        <Button onClick={onCheckout} disabled={items.length === 0} className="w-full mt-6">
+        <Button
+          onClick={onCheckout}
+          disabled={items.length === 0}
+          className="w-full mt-6"
+        >
           Thanh toán
         </Button>
       </div>

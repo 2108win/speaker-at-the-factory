@@ -1,5 +1,7 @@
 {
   "[typescriptreact]": {
     "emmet.showAbbreviationSuggestions": true
-  }
+  },
+  "IDX.aI.enableInlineCompletion": true,
+  "IDX.aI.enableCodebaseIndexing": true
 }

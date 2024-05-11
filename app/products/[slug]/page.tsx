@@ -41,8 +41,12 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params: { slug } }: ProductProps): Promise<Metadata> {
-  const response = await fetch(`${serverUrl}/Product/getOneSlug/${slug}?type=${type}`);
+export async function generateMetadata({
+  params: { slug },
+}: ProductProps): Promise<Metadata> {
+  const response = await fetch(
+    `${serverUrl}/Product/getOneSlug/${slug}?type=${type}`
+  );
   // const response = await fetch(`https://fakestoreapi.com/products/${slug}`);
   const productData: Product = await response.json();
   if (!productData) {
@@ -76,15 +80,23 @@ const ProductDetailPage = async ({ params: { slug } }: ProductProps) => {
         <div className="flex flex-col gap-4 lg:col-span-2">
           <h2 className="text-3xl font-bold">{product.productName}</h2>
           <p className="text-slate-500">{product.description}</p>
-          <Currency className="text-2xl font-bold text-slate-700" value={product.price || 0} />
-          <ProductCardAction isMain={true} className="mt-8" size="lg" product={product} />
+          <Currency
+            className="text-2xl font-bold text-slate-700"
+            value={product.price || 0}
+          />
+          <ProductCardAction
+            isMain={true}
+            className="mt-5"
+            size="lg"
+            product={product}
+          />
         </div>
       </div>
       {/* Assuming 'adapter' is the intended property for displaying update date */}
     </div>
   );
   const breadcrumb = (
-    <Breadcrumb className="w-full">
+    <Breadcrumb className="w-full mt-5">
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink href="/">Trang chủ</BreadcrumbLink>
@@ -212,10 +224,17 @@ const ProductDetailPage = async ({ params: { slug } }: ProductProps) => {
     },
   ];
   const tabs = (
-    <Tabs defaultValue="information" className="w-full transition-all duration-300">
+    <Tabs
+      defaultValue="information"
+      className="w-full transition-all duration-300"
+    >
       <TabsList className="flex-wrap justify-start box-decoration-clone">
         {tabData.map((tab, index) => (
-          <TabsTrigger className="text-xl" key={tab.value + index} value={tab.value}>
+          <TabsTrigger
+            className="text-xl"
+            key={tab.value + index}
+            value={tab.value}
+          >
             {tab.title}
           </TabsTrigger>
         ))}
@@ -224,7 +243,10 @@ const ProductDetailPage = async ({ params: { slug } }: ProductProps) => {
         <TabsContent className="mt-6 text-lg" key={tab.value} value={tab.value}>
           <div className="flex flex-col gap-4">
             {tab.content?.map((content, index) => (
-              <p className="text-slate-600" key={content?.value + content?.title}>
+              <p
+                className="text-slate-600"
+                key={content?.value + content?.title}
+              >
                 <span className="font-bold">{content?.title} : </span>
                 {content?.value}
               </p>

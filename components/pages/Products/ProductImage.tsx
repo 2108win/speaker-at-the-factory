@@ -10,7 +10,7 @@ import { Product } from "@/interfaces/product";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { type CarouselApi } from "@/components/ui/carousel";
+// import { type CarouselApi } from "@/components/ui/carousel";
 
 type Props = {
   product: Product;
@@ -19,14 +19,14 @@ type Props = {
 
 function ProductImage({ product, className }: Props) {
   const [currentImage, setCurrentImage] = useState(0);
-  const [api, setApi] = React.useState<CarouselApi>();
+  // const [api, setApi] = React.useState<CarouselApi>();
 
-  useEffect(() => {
-    if (!api) {
-      return;
-    }
-    api.scrollTo(currentImage);
-  }, [api, currentImage]);
+  // useEffect(() => {
+  //   if (!api) {
+  //     return;
+  //   }
+  //   api.scrollTo(currentImage);
+  // }, [api, currentImage]);
 
   return (
     <div className={`flex flex-col gap-2 ${className}`}>
@@ -64,7 +64,7 @@ function ProductImage({ product, className }: Props) {
           alt={product.productName + " - " + currentImage}
           width={1000}
           height={1000}
-          className="rounded-lg h-full aspect-auto object-contain object-center shadow-lg border transition-all duration-300"
+          className="rounded-lg h-full w-auto m-auto aspect-auto object-contain object-center shadow-lg border transition-all duration-300"
         />
       </div>
       <div className="flex gap-4 items-center w-full flex-nowrap overflow-x-auto py-4">

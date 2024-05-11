@@ -22,8 +22,6 @@ const ProductList = () => {
       setIsLoading(true);
       const response = await fetch(
         `${serverURL}/Product/getList`
-        // `${api_url}/Product/getList?page=${currentPage}&pageSize=${pageSize}`
-        // `https://fakestoreapi.com/products`
       );
       const data = await response.json();
       setProduct(data);
@@ -86,11 +84,6 @@ const ProductList = () => {
               </li>
             ))}
       </ul>
-      {/* {product?.length == 0 && (
-        <Button variant="secondary" size="lg" onClick={handleLoadMore} disabled={isLoading}>
-          {isLoading ? "Đang tải" : "Tải thêm"}
-        </Button>
-      )} */}
     </div>
   );
 };

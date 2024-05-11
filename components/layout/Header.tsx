@@ -30,29 +30,22 @@ const navItems = [
     href: "/products",
     items: [
       {
-        title: "Loa tự làm",
-        href: "/#",
-        description: "Loa tự làm tại xưởng với chất lượng âm thanh tốt nhất",
+        title: "Loa dã ngoại - Xám",
+        href: "/products/loa-da-ngoai-xam-t-288",
+        description:
+          "📟LOA XÁCH TAY Màu xám - GIÁ TẠI XƯỞNG - ĐÂU DÙNG CŨNG HAY📟",
       },
       {
-        title: "Loa nhập khẩu",
-        href: "/#",
-        description: "Loa tự làm tại xưởng với chất lượng âm thanh tốt nhất",
+        title: "Loa dã ngoại - Đỏ",
+        href: "/products/loa-da-ngoai-do-t-288",
+        description:
+          "📟LOA XÁCH TAY Màu đỏ - GIÁ TẠI XƯỞNG - ĐÂU DÙNG CŨNG HAY📟",
       },
       {
-        title: "Loa tự làm",
-        href: "/#",
-        description: "Loa tự làm tại xưởng với chất lượng âm thanh tốt nhất",
-      },
-      {
-        title: "Loa nhập khẩu",
-        href: "/#",
-        description: "Loa tự làm tại xưởng với chất lượng âm thanh tốt nhất",
-      },
-      {
-        title: "Loa tự làm",
-        href: "/#",
-        description: "Loa tự làm tại xưởng với chất lượng âm thanh tốt nhất",
+        title: "Loa dã ngoại - Xanh lá",
+        href: "/products/loa-da-ngoai-xanh-la-t-288",
+        description:
+          "📟LOA XÁCH TAY Màu xanh lá - GIÁ TẠI XƯỞNG - ĐÂU DÙNG CŨNG HAY📟",
       },
     ],
   },

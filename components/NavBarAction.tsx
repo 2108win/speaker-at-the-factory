@@ -20,11 +20,14 @@ const NavbarActions = () => {
   }
   return (
     <div className="items-center gap-2 flex">
-      <Button onClick={handleGotoCart} className="flex items-center rounded-full px-4 py-2">
+      <Button
+        onClick={handleGotoCart}
+        className="flex items-center rounded-full px-4 py-2"
+      >
         <ShoppingBag size={20} />
         <span className="ml-2 text-sm font-medium">{cart.items.length}</span>
       </Button>
-      <Button>Đăng nhập</Button>
+      {/* <Button>Đăng nhập</Button> */}
     </div>
   );
 };
