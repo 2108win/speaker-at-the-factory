@@ -74,6 +74,8 @@ const Footer = () => {
             </p>
             <div className="mt-6 flex w-fit items-center gap-2 rounded-3xl bg-neutral-50/30 p-[2px] text-black dark:bg-slate-950/30 dark:text-white">
               <Input
+                type="email"
+                autoComplete="off"
                 placeholder="Email của bạn"
                 className="max-w-sm rounded-3xl border-none bg-transparent font-medium outline-none placeholder:text-neutral-200"
               />

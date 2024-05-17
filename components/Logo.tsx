@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 const Logo = ({ hasText }: { hasText?: boolean }) => {
   return (
-    <Link href={"/"} className="flex w-fit items-center gap-2">
+    <Link href={"/"} className="flex w-fit items-center gap-2 z-10">
       <Image src="/logo.png" width={40} height={40} alt="logo_image" />
       <div
         className={cn(

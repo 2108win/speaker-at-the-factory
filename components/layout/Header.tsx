@@ -32,20 +32,17 @@ const navItems = [
       {
         title: "Loa dã ngoại - Xám",
         href: "/products/loa-da-ngoai-xam-t-288",
-        description:
-          "📟LOA XÁCH TAY Màu xám - GIÁ TẠI XƯỞNG - ĐÂU DÙNG CŨNG HAY📟",
+        description: "📟LOA XÁCH TAY Màu xám - GIÁ TẠI XƯỞNG - ĐÂU DÙNG CŨNG HAY📟",
       },
       {
         title: "Loa dã ngoại - Đỏ",
         href: "/products/loa-da-ngoai-do-t-288",
-        description:
-          "📟LOA XÁCH TAY Màu đỏ - GIÁ TẠI XƯỞNG - ĐÂU DÙNG CŨNG HAY📟",
+        description: "📟LOA XÁCH TAY Màu đỏ - GIÁ TẠI XƯỞNG - ĐÂU DÙNG CŨNG HAY📟",
       },
       {
         title: "Loa dã ngoại - Xanh lá",
         href: "/products/loa-da-ngoai-xanh-la-t-288",
-        description:
-          "📟LOA XÁCH TAY Màu xanh lá - GIÁ TẠI XƯỞNG - ĐÂU DÙNG CŨNG HAY📟",
+        description: "📟LOA XÁCH TAY Màu xanh lá - GIÁ TẠI XƯỞNG - ĐÂU DÙNG CŨNG HAY📟",
       },
     ],
   },
@@ -64,9 +61,9 @@ const Header = (props: Props) => {
 
   return (
     <header className="sticky top-0 z-50 mx-auto w-full max-w-7xl p-1 md:p-4">
-      <div className="flex items-center justify-between rounded-lg bg-neutral-50/50 p-2 md:p-4 backdrop-blur-md dark:bg-slate-950/30">
+      <div className="flex items-center justify-between rounded-lg bg-neutral-50/50 p-2 md:p-4 dark:bg-slate-950/30 backdrop-blur-md">
         <Logo />
-        <div className="hidden w-fit gap-2 lg:flex mx-auto">
+        <div className="hidden w-fit gap-2 lg:flex mx-auto z-10">
           <NavigationMenu>
             <NavigationMenuList>
               {navItems.map(({ title, href, items }, index) => (
@@ -121,7 +118,7 @@ const Header = (props: Props) => {
         {/* <div className="hidden items-center gap-2 lg:flex">
           <Button>Đăng nhập</Button>
         </div> */}
-        <div className="flex ml-auto gap-2">
+        <div className="flex ml-auto gap-2 z-10">
           <NavbarActions />
           <Sheet>
             <SheetTrigger

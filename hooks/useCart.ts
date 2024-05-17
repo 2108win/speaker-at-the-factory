@@ -5,16 +5,18 @@ import { toast } from "sonner";
 interface CartStore {
   items: Product[];
   addItem: (data: Product, quantity: number, onClick?: () => void) => void;
-  removeItem: (id: string) => void;
+  removeItem: (id: string, hasToast?: boolean) => void;
   removeAll: () => void;
   updateItem: (id: string, quantity: number) => void;
   checkedItem: (id: string, checked: boolean) => void;
+  isLoading: boolean;
 }
 
 const useCart = create(
   persist<CartStore>(
     (set, get) => ({
       items: [],
+      isLoading: false,
       addItem: (data: Product, quantity, onClick?: () => void) => {
         const currentItems = get().items;
         const existingItem = currentItems.find((item) => item.id === data.id);
@@ -26,30 +28,35 @@ const useCart = create(
                 : item
             ),
           });
-          return toast.success("Sản phẩm đã được cập nhật trong giỏ hàng.", onClick && {
+          return toast.success(
+            "Sản phẩm đã được cập nhật trong giỏ hàng.",
+            onClick && {
+              action: {
+                label: "Xem giỏ hàng",
+                onClick: onClick,
+              },
+            }
+          );
+        }
+
+        // set({ items: [...get().items, { ...data, quantity: 1 }] });
+        set({ items: [{ ...data, quantity: quantity, checked: true }, ...currentItems] });
+        toast.success(
+          "Sản phẩm đã được thêm vào giỏ hàng.",
+          onClick && {
             action: {
               label: "Xem giỏ hàng",
               onClick: onClick,
             },
-          });
-        }
-
-        // set({ items: [...get().items, { ...data, quantity: 1 }] });
-        set({ items: [...currentItems, { ...data, quantity: quantity }] });
-        toast.success("Sản phẩm đã được thêm vào giỏ hàng.", onClick && {
-          action: {
-            label: "Xem giỏ hàng",
-            onClick: onClick,
-          },
-        });
+          }
+        );
       },
-      removeItem: (id: string) => {
+      removeItem: (id: string, hasToast = true) => {
         const currentItems = get().items;
         const tempItems = currentItems.find((item) => item.id === id);
         set({ items: [...get().items.filter((item) => item.id !== id)] });
-        toast.success(
-          `Sản phẩm ${tempItems?.productName} đã được xóa khỏi giỏ hàng.`,
-          {
+        if (hasToast) {
+          toast.success(`Sản phẩm ${tempItems?.productName} đã được xóa khỏi giỏ hàng.`, {
             action: {
               label: tempItems ? "Hoàn tác" : "Tới trang sản phẩm",
               onClick: () => {
@@ -58,8 +65,8 @@ const useCart = create(
                   : set({ items: [...currentItems] });
               },
             },
-          }
-        );
+          });
+        }
       },
       removeAll: () => {
         const tempItems = get().items;
@@ -71,13 +78,12 @@ const useCart = create(
               tempItems && set({ items: [...tempItems] });
             },
           },
+          duration: 20000,
         });
       },
       updateItem: (id: string, quantity: number) => {
         set({
-          items: get().items.map((item) =>
-            item.id === id ? { ...item, quantity } : item
-          ),
+          items: get().items.map((item) => (item.id === id ? { ...item, quantity } : item)),
         });
       },
       checkedItem: (id: string, checked: boolean) => {

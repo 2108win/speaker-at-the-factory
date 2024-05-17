@@ -58,13 +58,13 @@ function ProductImage({ product, className }: Props) {
           className={cn("right-2 hover:scale-110", product.images.length < 2 && "hidden")}
         />
       </Carousel> */}
-      <div className="max-h-[350px] md:max-h-[450px] h-auto">
+      <div className="h-[300px] md:h-[450px] flex">
         <Image
           src={product.images[currentImage]}
           alt={product.productName + " - " + currentImage}
           width={1000}
           height={1000}
-          className="rounded-lg h-full w-auto m-auto aspect-auto object-contain object-center shadow-lg border transition-all duration-300"
+          className="rounded-lg h-auto max-h-full w-auto m-auto aspect-auto object-contain object-center shadow-lg border transition-all duration-300"
         />
       </div>
       <div className="flex gap-4 items-center w-full flex-nowrap overflow-x-auto py-4">

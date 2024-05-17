@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 
 const serverURL = process.env.NEXT_PUBLIC_SERVER_URL;
 
-const ListProduct = async () => {
+const ListProduct = async ({ className }: { className?: string }) => {
   const res = await fetch(`${serverURL}/Product/getList`);
   const product: Product[] = await res.json();
   // const [product, setProduct] = useState<Product[]>([]);
@@ -30,7 +30,9 @@ const ListProduct = async () => {
   //   fetchProduct();
   // }, []);
   return (
-    <div className="mt-layout-screen z-[1] mx-auto grid w-full max-w-7xl items-center gap-6 px-4">
+    <div
+      className={`mt-layout-screen z-[1] mx-auto grid w-full max-w-7xl items-center gap-6 px-4 ${className}`}
+    >
       <div className="flex flex-wrap gap-2 items-center justify-between w-full">
         <h3 className="bg-gradient-to-r from-slate-500 to-slate-950 bg-clip-text text-3xl font-bold !leading-normal text-transparent dark:from-neutral-700 dark:to-neutral-100 md:text-4xl">
           Sản phẩm nổi bật

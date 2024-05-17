@@ -34,17 +34,17 @@ const CartItem: React.FC<CartItemProps> = ({ data }) => {
   }, [data.id, cart, quantity, data.price, totalPrice]);
 
   const onRemove = () => {
-    cart.removeItem(data.id);
+    cart.removeItem(data.id, true);
   };
 
   return (
-    <li className="relative">
+    <li className="relative -mx-1 sm:-mx-0">
       <label
         htmlFor={"check" + data.id}
         className={cn(
-          "relative flex bg-background p-4 gap-4 lg:p-6 rounded-lg shadow-sm hover:shadow-xl border transition-all duration-300",
+          "relative cursor-pointer flex bg-background p-2 sm:p-4 gap-4 lg:p-6 rounded-lg shadow-sm hover:shadow-xl border transition-all duration-300",
           {
-            "border-4 border-green-300 shadow-xl": data.checked,
+            "border-green-500 shadow-xl": data.checked,
           }
         )}
       >
@@ -52,42 +52,41 @@ const CartItem: React.FC<CartItemProps> = ({ data }) => {
           id={"check" + data.id}
           checked={data.checked}
           onCheckedChange={handleChecked}
-          className=" z-10 h-5 w-5"
+          className="z-10 h-5 w-5"
         />
         <Button
           size="icon"
           variant="destructive"
           onClick={onRemove}
-          className="absolute top-4 right-4 z-10"
+          className="absolute bottom-2 left-2 sm:left-auto sm:bottom-auto sm:top-4 sm:right-4 z-10 p-1 sm:p-2"
         >
-          <Trash size={20} />
+          <Trash className="h-5 w-5" />
         </Button>
-        <div className="relative rounded-md w-[250px] overflow-hidden dark:bg-neutral-50/20">
+        <div className="relative rounded-md w-[100px] sm:w-[150px] md:w-[250px] overflow-hidden">
           <Image
             src={data.images[0] || "/og-image.jpg"}
             alt={data.productName}
             width={250}
             height={200}
-            className="object-contain max-h-[150px] h-auto w-auto object-center rounded-md shadow-md border"
+            className="object-contain max-h-[150px] h-auto my-auto w-auto object-center rounded-md shadow-md border"
           />
         </div>
         <div className="relative flex flex-col h-auto flex-1 justify-between sm:ml-6">
           <div className="flex w-full h-full justify-between flex-col gap-4">
-            <div className="flex flex-col gap-4 pr-12 group w-fit">
-              <Link
-                href={`/products/${data.slug}`}
-                className="text-2xl font-semibold hover:underline flex items-center line-clamp-6"
-              >
-                {data.productName}
+            <div className="flex flex-col gap-4 sm:pr-12 group w-fit">
+              <Link href={`/products/${data.slug}`} className="hover:underline flex items-center">
+                <p className="text-md sm:text-2xl font-medium line-clamp-2">
+                  {data.productName}
+                  <span className="inline-flex">
+                    <ExternalLink className="ml-2 opacity-0 group-hover:opacity-100" size={16} />
+                  </span>
+                </p>
+
                 {/* {data.productName} */}
-                <ExternalLink
-                  className="ml-4 hidden group-hover:block"
-                  size={16}
-                />
               </Link>
-              <Currency className="text-lg !font-light" value={data.price} />
+              <Currency className="text-lg sm:!font-light" value={data.price} />
             </div>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between gap-2">
               <div className="flex items-center p-[1px] rounded-lg border border-gray-200">
                 <Button
                   variant="ghost"
@@ -124,7 +123,7 @@ const CartItem: React.FC<CartItemProps> = ({ data }) => {
                   <Plus size={20} />
                 </Button>
               </div>
-              <Currency className="text-xl font-bold" value={totalPrice} />
+              <Currency className="text-xl font-bold hidden sm:block" value={totalPrice} />
             </div>
           </div>
         </div>

@@ -1,5 +1,5 @@
 "use client";
-import { ShoppingBag } from "lucide-react";
+import { Loader2, ShoppingBag } from "lucide-react";
 import { Button } from "./ui/button";
 import useCart from "@/hooks/useCart";
 import { useEffect, useState } from "react";
@@ -20,12 +20,15 @@ const NavbarActions = () => {
   }
   return (
     <div className="items-center gap-2 flex">
-      <Button
-        onClick={handleGotoCart}
-        className="flex items-center rounded-full px-4 py-2"
-      >
+      <Button onClick={handleGotoCart} className="flex items-center rounded-full px-4 py-2">
         <ShoppingBag size={20} />
-        <span className="ml-2 text-sm font-medium">{cart.items.length}</span>
+        {cart ? (
+          <span className="ml-2 text-sm font-medium">{cart.items.length}</span>
+        ) : (
+          <span className="animate-spin">
+            <Loader2 size={16} />
+          </span>
+        )}
       </Button>
       {/* <Button>Đăng nhập</Button> */}
     </div>
