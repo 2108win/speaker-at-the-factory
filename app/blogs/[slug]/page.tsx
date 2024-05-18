@@ -5,31 +5,21 @@ import Image from "next/image";
 import { Metadata } from "next";
 import Loading from "./loading";
 import formatDate from "@/components/ui/date-format";
+import { getListBlog, getOneBlog } from "@/utils/fetchBlogs";
 
 interface BlogProps {
   params: {
     slug: string;
   };
 }
-
-const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL
-  ? process.env.NEXT_PUBLIC_SERVER_URL
-  : "http://localhost:3000";
-const type = process.env.NEXT_PUBLIC_SERVER_URL ? "server" : "local";
-
 export async function generateStaticParams() {
-  const response = await fetch(`${serverUrl}/Blog/getList?type=${type}`);
-  const data: Blog[] = await response.json();
+  const data = await getListBlog();
   return data.map((blog: Blog) => ({
     slug: blog.slug,
   }));
 }
 export async function generateMetadata({ params: { slug } }: BlogProps): Promise<Metadata> {
-  const response = await fetch(`${serverUrl}/Blog/getOneSlug/${slug}?type=${type}`);
-  const blogData = await response.json();
-  // const response = await fetch(`${serverUrl}/Blog/getList?type=${type}`);
-  // const data: Blog[] = await response.json();
-  // const blogData = data.find((blog: Blog) => blog.slug === slug);
+  const blogData = await getOneBlog(slug);
   if (!blogData) {
     return {
       title: "Bài viết không tồn tại",
@@ -42,26 +32,20 @@ export async function generateMetadata({ params: { slug } }: BlogProps): Promise
     openGraph: {
       title: blogData.title,
       description: blogData.description,
+      images: [`/api/og?title=${blogData.title}&image=${blogData.imageUrl}`, blogData.imageUrl],
     },
   };
 }
 
 const BlogDetailPage = async ({ params: { slug } }: BlogProps) => {
-  const response = await fetch(`${serverUrl}/Blog/getOneSlug/${slug}?type=${type}`);
-  const blogData = await response.json();
-  // const response = await fetch(`${serverUrl}/Blog/getList?type=${type}`);
-  // const data: Blog[] = await response.json();
-  // const blog = data.find((blog: Blog) => blog.slug === slug);
-  // const blogData = await fetch(`${serverUrl}/Blog/getOne/${blog?.id}?type=${type}`).then((res) =>
-  //   res.json()
-  // );
+  const blogData = await getOneBlog(slug);
   if (!blogData) {
     return <div>Blog not found</div>;
   }
 
   const content = (
     <span
-      className="mx-auto block max-w-7xl [&>*]:leading-7 [&>p>img]:mx-auto [&>p>img]:my-4 [&>p>img]:aspect-video [&>p>img]:max-w-4xl [&>p>img]:rounded-md [&>p>img]:border-2 [&>p>img]:border-gray-300 [&>p>img]:object-cover [&>p>img]:drop-shadow-lg [&>p]:text-lg [&>p]:font-normal [&>p]:text-slate-900 dark:[&>p]:text-neutral-100"
+      className="mx-auto block max-w-7xl [&>*]:leading-7 [&>p>img]:mx-auto [&>p>img]:my-4 [&>p>img]:aspect-video [&>p>img]:max-w-4xl [&>p>img]:rounded-md [&>p>img]:border-2 [&>p>img]:border-gray-300 [&>p>img]:object-cover [&>p>img]:drop-shadow-lg [&>p]:text-lg [&>p]:font-normal dark:[&>p]:text-neutral-100"
       dangerouslySetInnerHTML={{ __html: blogData?.content }}
     />
   );

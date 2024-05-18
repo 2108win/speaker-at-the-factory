@@ -72,16 +72,16 @@ const Footer = () => {
               những âm thanh từ những người bạn kể về sản phẩm, và cả những câu chuyện trong đời mỗi
               con người. Đó là điều Loa Tại Xưởng luôn nỗ lực hướng đến.
             </p>
-            <div className="mt-6 flex w-fit items-center gap-2 rounded-3xl bg-neutral-50/30 p-[2px] text-black dark:bg-slate-950/30 dark:text-white">
+            <div className="mt-6 flex w-full max-w-96 items-center gap-2 rounded-3xl bg-neutral-50/30 p-[2px] text-black dark:bg-neutral-950/30 dark:text-white">
               <Input
                 type="email"
                 autoComplete="off"
                 placeholder="Email của bạn"
                 className="max-w-sm rounded-3xl border-none bg-transparent font-medium outline-none placeholder:text-neutral-200"
               />
-              <Button className="relative inline-flex overflow-hidden rounded-3xl p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
+              <Button className="relative w-fit shrink-0 overflow-hidden rounded-3xl p-[1px]">
                 <span className="absolute inset-[-1000%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#1c003d_0%,#2630e8_50%,#fcf9ff_100%)] dark:bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#050959_50%,#240050_100%)]" />
-                <span className="relative z-10 inline-flex h-full w-full cursor-pointer items-center justify-center rounded-3xl bg-neutral-50 px-10 py-3 text-center font-medium text-black dark:bg-black dark:text-white lg:text-lg">
+                <span className="relative z-10 inline-flex h-full w-full cursor-pointer items-center justify-center rounded-3xl bg-neutral-50 px-8 py-3 text-center font-medium text-black dark:bg-black dark:text-white lg:text-lg">
                   Gửi
                 </span>
               </Button>
@@ -111,7 +111,7 @@ const Footer = () => {
       <Separator />
       <div className="mx-auto max-w-7xl p-6 lg:px-8">
         <div className="flex flex-col justify-between gap-4 md:flex-row">
-          <span className="text-sm text-neutral-200 dark:text-slate-800">
+          <span className="text-sm text-neutral-200 dark:text-neutral-800">
             Bản quyền bởi{" "}
             <Link
               href="https://www.instagram.com/win_lax/"
@@ -132,11 +132,11 @@ const Footer = () => {
           <div className="flex items-center gap-2">
             {dataSocial.map((item, index) => (
               <Link key={index} href={item.href}>
-                <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-neutral-200 p-1 dark:border-slate-800">
+                <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-neutral-200 p-1 dark:border-neutral-800">
                   <Icon
                     name={item.icon}
                     strokeWidth={1}
-                    className="h-8 w-8 text-neutral-200 dark:text-slate-800"
+                    className="h-8 w-8 text-neutral-200 dark:text-neutral-800"
                   />
                 </div>
               </Link>

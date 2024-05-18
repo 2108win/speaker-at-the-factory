@@ -1,4 +1,7 @@
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const dataStory = [
@@ -22,7 +25,7 @@ const Story = () => {
       <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
         {dataStory.map((story, index) => (
           <div key={index} className="relative aspect-square w-full overflow-hidden rounded-lg">
-            <div className="absolute inset-0 bg-slate-900/10 backdrop-blur-[2px]"></div>
+            <div className="absolute inset-0 bg-neutral-900/10 backdrop-blur-[2px]"></div>
             <Image
               className="h-full w-full rounded-lg object-cover"
               src={story.image}
@@ -35,12 +38,18 @@ const Story = () => {
               <span className="line-clamp-5 text-base text-neutral-50 lg:text-lg">
                 {story.description}
               </span>
-              <button className="relative inline-flex h-12 w-fit overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
+              <Link
+                href="/blogs"
+                className={cn(
+                  buttonVariants(),
+                  "relative inline-flex h-12 w-fit overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:ring-offset-2 focus:ring-offset-neutral-50"
+                )}
+              >
                 <span className="absolute inset-[-1000%] animate-[spin_5s_ease_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#000000_0%,#555555_50%,#ffffff_100%)] dark:bg-[conic-gradient(from_90deg_at_50%_50%,#ffffff_0%,#555555_50%,#000000_100%)]" />
-                <span className="z-10 inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-black/30 px-8 py-4 text-lg font-medium text-white backdrop-blur-lg dark:bg-neutral-50/20">
+                <span className="z-10 inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-[linear-gradient(110deg,#000000,25%,#3d444e,55%,#000000)] bg-[length:200%_100%] px-8 py-4 text-lg font-medium text-white backdrop-blur-lg dark:bg-neutral-50/20">
                   Xem thêm
                 </span>
-              </button>
+              </Link>
             </div>
           </div>
         ))}

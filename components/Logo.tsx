@@ -9,7 +9,7 @@ const Logo = ({ hasText }: { hasText?: boolean }) => {
       <Image src="/logo.png" width={40} height={40} alt="logo_image" />
       <div
         className={cn(
-          "relative overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50",
+          "relative overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:ring-offset-2 focus:ring-offset-neutral-50",
           hasText ? "inline-flex" : "hidden md:inline-flex"
         )}
       >

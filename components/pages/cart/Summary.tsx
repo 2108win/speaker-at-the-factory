@@ -208,7 +208,7 @@ const Summary = () => {
           </div>
         )}
         {isAddress && (
-          <div className="space-y-4 mt-4">
+          <form className="space-y-4 mt-4">
             <Separator />
             <h3 className="text-base font-bold">Địa chỉ giao hàng</h3>
             <div className="flex flex-col gap-4">
@@ -252,7 +252,7 @@ const Summary = () => {
                 />
               </div>
             </div>
-          </div>
+          </form>
         )}
         <Button onClick={onCheckout} disabled={handleDisabled()} className="w-full mt-6">
           {items.length === 0 || isAddress ? "Thanh toán" : "Tiếp tục"}

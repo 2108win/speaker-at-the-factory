@@ -1,11 +1,11 @@
 "use client";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+// import {
+//   Carousel,
+//   CarouselContent,
+//   CarouselItem,
+//   CarouselNext,
+//   CarouselPrevious,
+// } from "@/components/ui/carousel";
 import { Product } from "@/interfaces/product";
 import { cn } from "@/lib/utils";
 import Image from "next/image";

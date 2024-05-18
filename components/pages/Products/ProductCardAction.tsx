@@ -6,6 +6,7 @@ import { Minus, Plus, ShoppingCart } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import React, { useState } from "react";
+import AuthModal from "@/components/modal/auth-modal";
 
 type Props = {
   product: Product;
@@ -14,15 +15,11 @@ type Props = {
   isMain?: boolean;
 };
 
-export const ProductCardAction = ({
-  product,
-  size,
-  className,
-  isMain,
-}: Props) => {
+export const ProductCardAction = ({ product, size, className, isMain }: Props) => {
   const [quantity, setQuantity] = useState(1);
   const router = useRouter();
   const cart = useCart();
+  const isLogin = true;
 
   const onChangeQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (Number(e.target.value) < 1) return;
@@ -66,7 +63,7 @@ export const ProductCardAction = ({
           <Input
             value={quantity}
             onChange={onChangeQuantity}
-            className="max-w-10 text-center focus:outline-none border-none font-semibold text-black focus-visible:ring-0 focus-visible:ring-ring focus-visible:ring-offset-0"
+            className="max-w-10 text-center focus:outline-none border-none font-semibold text-black focus-visible:ring-0 focus-visible:ring-ring focus-visible:ring-offset-0 dark:text-white"
             min={1}
             max={100}
             step={1}
@@ -86,18 +83,44 @@ export const ProductCardAction = ({
         </div>
       )}
       <div className="flex flex-col sm:flex-row gap-4 mt-4">
-        <Button onClick={onAddToCart} size={size} className="w-full">
-          Thêm vào giỏ hàng
-          <ShoppingCart className="ml-4" size={20} />
-        </Button>
-        <Button
-          onClick={handleBuyNow}
-          className="w-full"
-          size={size}
-          variant={"outline"}
-        >
-          Mua ngay
-        </Button>
+        {isLogin ? (
+          <Button onClick={onAddToCart} size={size} className="w-full">
+            Thêm vào giỏ hàng
+            <ShoppingCart className="ml-4" size={20} />
+          </Button>
+        ) : (
+          <AuthModal
+            trigger={
+              <Button size={size} className="w-full">
+                Thêm vào giỏ hàng
+                <ShoppingCart className="ml-4" size={20} />
+              </Button>
+            }
+          />
+        )}
+
+        {isLogin ? (
+          <Button
+            onClick={handleBuyNow}
+            className="w-full bg-[linear-gradient(110deg,#000000,25%,#3d444e,55%,#000000)] bg-[length:200%_100%]"
+            size={size}
+            variant={"outline"}
+          >
+            Mua ngay
+          </Button>
+        ) : (
+          <AuthModal
+            trigger={
+              <Button
+                className="w-full bg-[linear-gradient(110deg,#000000,25%,#3d444e,55%,#000000)] bg-[length:200%_100%]"
+                size={size}
+                variant={"outline"}
+              >
+                Mua ngay
+              </Button>
+            }
+          />
+        )}
       </div>
     </div>
   );
@@ -106,6 +129,7 @@ export const ProductCardAction = ({
 export const ProductCardActionHome = ({ product, className }: Props) => {
   const router = useRouter();
   const cart = useCart();
+  const isLogin = true;
 
   const onAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -115,27 +139,51 @@ export const ProductCardActionHome = ({ product, className }: Props) => {
     });
   };
   return (
-    <div
-      className={`mt-8 flex flex-col items-center gap-4 md:flex-row ${className}`}
-    >
-      <button
-        onClick={() => router.push(`/products/${product.slug}`)}
-        className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
-      >
-        <span className="absolute inset-[-1000%] animate-[spin_5s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#000000_0%,#555555_50%,#ffffff_100%)] dark:bg-[conic-gradient(from_90deg_at_50%_50%,#ffffff_0%,#555555_50%,#000000_100%)]" />
-        <span className="z-10 inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-black/10 px-8 py-4 text-lg font-medium text-neutral-50 backdrop-blur-lg hover:bg-slate-900/70 dark:bg-neutral-50/10 hover:dark:bg-black/70">
-          Mua ngay
-        </span>
-      </button>
-      <button
-        onClick={onAddToCart}
-        className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
-      >
-        <span className="absolute inset-[-1000%] animate-[spin_10s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#000000_0%,#555555_50%,#ffffff_100%)] dark:bg-[conic-gradient(from_90deg_at_50%_50%,#ffffff_0%,#555555_50%,#000000_100%)]" />
-        <span className="z-10 inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-neutral-50 px-8 py-4 text-lg font-medium text-slate-950 hover:text-neutral-50 backdrop-blur-lg hover:bg-slate-900/70 dark:bg-black dark:text-neutral-50 hover:dark:bg-black/70">
-          Thêm vào giỏ hàng
-        </span>
-      </button>
+    <div className={`mt-8 flex flex-col items-center gap-4 md:flex-row ${className}`}>
+      {isLogin ? (
+        <Button
+          onClick={() => router.push(`/products/${product.slug}`)}
+          className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:ring-offset-2 focus:ring-offset-neutral-50"
+        >
+          <span className="absolute inset-[-1000%] animate-[spin_5s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#000000_0%,#555555_50%,#ffffff_100%)] dark:bg-[conic-gradient(from_90deg_at_50%_50%,#ffffff_0%,#555555_50%,#000000_100%)]" />
+          <span className="z-10 inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-[linear-gradient(110deg,#000000,25%,#3d444e,55%,#000000)] bg-[length:200%_100%] px-8 py-4 text-lg font-medium text-neutral-50 backdrop-blur-lg hover:sm:bg-neutral-900/70 dark:sm:bg-neutral-50/10 hover:sm:dark:bg-black/70">
+            Mua ngay
+          </span>
+        </Button>
+      ) : (
+        <AuthModal
+          trigger={
+            <Button className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:ring-offset-2 focus:ring-offset-neutral-50">
+              <span className="absolute inset-[-1000%] animate-[spin_5s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#000000_0%,#555555_50%,#ffffff_100%)] dark:bg-[conic-gradient(from_90deg_at_50%_50%,#ffffff_0%,#555555_50%,#000000_100%)]" />
+              <span className="z-10 inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-[linear-gradient(110deg,#000000,25%,#3d444e,55%,#000000)] bg-[length:200%_100%] px-8 py-4 text-lg font-medium text-neutral-50 backdrop-blur-lg hover:sm:bg-neutral-900/70 dark:sm:bg-neutral-50/10 hover:sm:dark:bg-black/70">
+                Mua ngay
+              </span>
+            </Button>
+          }
+        />
+      )}
+      {isLogin ? (
+        <Button
+          onClick={onAddToCart}
+          className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:ring-offset-2 focus:ring-offset-neutral-50"
+        >
+          <span className="absolute inset-[-1000%] animate-[spin_10s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#000000_0%,#555555_50%,#ffffff_100%)] dark:bg-[conic-gradient(from_90deg_at_50%_50%,#ffffff_0%,#555555_50%,#000000_100%)]" />
+          <span className="z-10 inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-neutral-50 px-8 py-4 text-lg font-medium text-neutral-950 hover:text-neutral-50 backdrop-blur-lg hover:bg-neutral-900/70 dark:bg-black dark:text-neutral-50 hover:dark:bg-black/70">
+            Thêm vào giỏ hàng
+          </span>
+        </Button>
+      ) : (
+        <AuthModal
+          trigger={
+            <Button className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:ring-offset-2 focus:ring-offset-neutral-50">
+              <span className="absolute inset-[-1000%] animate-[spin_10s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#000000_0%,#555555_50%,#ffffff_100%)] dark:bg-[conic-gradient(from_90deg_at_50%_50%,#ffffff_0%,#555555_50%,#000000_100%)]" />
+              <span className="z-10 inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-neutral-50 px-8 py-4 text-lg font-medium text-neutral-950 hover:text-neutral-50 backdrop-blur-lg hover:bg-neutral-900/70 dark:bg-black dark:text-neutral-50 hover:dark:bg-black/70">
+                Thêm vào giỏ hàng
+              </span>
+            </Button>
+          }
+        />
+      )}
     </div>
   );
 };

@@ -12,11 +12,13 @@ import {
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Menu } from "lucide-react";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { Menu, Moon, Sun, TabletSmartphone } from "lucide-react";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { usePathname } from "next/navigation";
 import Logo from "@/components/Logo";
 import NavbarActions from "../NavBarAction";
+// import { ModeToggle } from "./toggle-mode";
+import { useTheme } from "next-themes";
 
 type Props = {};
 
@@ -58,10 +60,11 @@ const navItems = [
 
 const Header = (props: Props) => {
   const currentPathname = usePathname();
+  const { setTheme, theme } = useTheme();
 
   return (
     <header className="sticky top-0 z-50 mx-auto w-full max-w-7xl p-1 md:p-4">
-      <div className="flex items-center justify-between rounded-lg bg-neutral-50/50 p-2 md:p-4 dark:bg-slate-950/30 backdrop-blur-md">
+      <div className="flex items-center justify-between rounded-lg bg-neutral-50/50 p-2 md:p-4 dark:bg-neutral-950/30 backdrop-blur-md">
         <Logo />
         <div className="hidden w-fit gap-2 lg:flex mx-auto z-10">
           <NavigationMenu>
@@ -114,10 +117,6 @@ const Header = (props: Props) => {
             </NavigationMenuList>
           </NavigationMenu>
         </div>
-        {/* right side */}
-        {/* <div className="hidden items-center gap-2 lg:flex">
-          <Button>Đăng nhập</Button>
-        </div> */}
         <div className="flex ml-auto gap-2 z-10">
           <NavbarActions />
           <Sheet>
@@ -137,6 +136,31 @@ const Header = (props: Props) => {
                 {/* <div className="flex flex-col gap-2">
                   <Button className="w-full">Đăng nhập</Button>
                 </div> */}
+                {/* <ModeToggle /> */}
+                <span className="font-semibold">Chủ đề:</span>
+                <ScrollArea className="-mx-4 !-mt-4">
+                  <div className="flex gap-1 p-4 w-max space-x-2">
+                    <Button
+                      variant={theme === "light" ? "secondary" : "ghost"}
+                      onClick={() => setTheme("light")}
+                    >
+                      <Sun size={20} className="mr-1" /> Sáng
+                    </Button>
+                    <Button
+                      variant={theme === "dark" ? "secondary" : "ghost"}
+                      onClick={() => setTheme("dark")}
+                    >
+                      <Moon size={20} className="mr-1" /> Tối
+                    </Button>
+                    <Button
+                      variant={theme === "system" ? "secondary" : "ghost"}
+                      onClick={() => setTheme("system")}
+                    >
+                      <TabletSmartphone size={20} className="mr-1" /> Hệ thống
+                    </Button>
+                  </div>
+                  <ScrollBar orientation="horizontal" />
+                </ScrollArea>
                 <ScrollArea className="h-full">
                   <div className="-mr-2 h-full pr-3">
                     {navItems.map(({ title, href, items }, index) => (

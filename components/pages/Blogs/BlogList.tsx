@@ -6,9 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { getListBlog } from "@/utils/fetchBlogs";
 
-const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
-const type = process.env.NEXT_PUBLIC_SERVER_URL ? "server" : "local";
 const BlogList = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [blogFiltered, setBlogFiltered] = useState<Blog[]>([]);
@@ -20,24 +19,16 @@ const BlogList = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       setIsLoading(true);
-      const response = await fetch(
-        `${serverUrl}/Blog/getList?type=${type}`
-        // `https://1c6d5c6c04154692833486023b73778f.api.mockbin.io/`
-      );
-      const data = await response.json();
+      const data = await getListBlog();
       setBlogs(data);
       setBlogFiltered(data);
       setIsLoading(false);
     };
-    // setBlogs((prev) => [...prev, ...blogData]);
     fetchBlogs();
   }, []);
 
   const handleLoadMore = async () => {
     const nextPage = currentPage + 1;
-    // const response = await fetch(`${serverUrl}/Blogs/getList?page=${nextPage}&pageSize=${pageSize}`);
-    // const data = await response.json();
-    // setBlogs((prevBlogs) => [...prevBlogs, ...data.blogs]);
     setCurrentPage(nextPage);
   };
 
@@ -58,34 +49,24 @@ const BlogList = () => {
     <div className="mt-layout-screen w-full flex flex-col gap-10 items-center">
       <div className="flex w-full max-w-md items-center space-x-2">
         {isLoading ? (
-          <Skeleton className="w-full h-14 rounded-3xl bg-slate-950/10"></Skeleton>
+          <Skeleton className="w-full h-14 rounded-3xl bg-neutral-950/10"></Skeleton>
         ) : (
           <Input
             type="text"
             placeholder="Tìm kiếm..."
             onChange={handleSearch}
-            className="w-full text-lg h-14 px-4 border-none bg-slate-950/5 dark:bg-neutral-50/5 rounded-3xl"
+            className="w-full text-lg h-14 px-4 border-none bg-neutral-950/5 dark:bg-neutral-50/5 rounded-3xl"
           />
         )}
       </div>
       <ul className="grid grid-cols-1 w-full gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {isLoadingSearch || isLoading
-          ? Array(5)
-              .fill(0)
-              .map((_, idx) => (
-                <div key={idx} className={cn("space-y-2", idx == 4 ? "col-span-2" : "col-span-1")}>
-                  <Skeleton className="h-40 rounded-lg w-full bg-slate-950/10"></Skeleton>
-                  <Skeleton className="bg-slate-950/10 first-letter:h-6 w-3/4"></Skeleton>
-                  <Skeleton className="bg-slate-950/10 h-6"></Skeleton>
-                </div>
-              ))
-          : blogFiltered.map((blog, index: number) => (
-              <BlogItem
-                className={(index > 4 && index % 5 == 0) || index == 0 ? "lg:col-span-2" : ""}
-                key={blog.id}
-                blog={blog}
-              />
-            ))}
+        {blogFiltered.map((blog, index: number) => (
+          <BlogItem
+            className={(index > 4 && index % 5 == 0) || index == 0 ? "lg:col-span-2" : ""}
+            key={blog.id}
+            blog={blog}
+          />
+        ))}
       </ul>
       {blogs?.length == 0 && (
         <Button variant="secondary" size="lg" onClick={handleLoadMore} disabled={isLoading}>

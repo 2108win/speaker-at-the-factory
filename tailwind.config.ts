@@ -63,6 +63,13 @@ const config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+        "spin-slow": "spin 2s linear infinite",
+        shimmer: "shimmer 2s linear infinite",
+        "button-pop": "button-pop 0s ease-out",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
@@ -72,11 +79,25 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-      },
-      animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
-        "spin-slow": "spin 2s linear infinite",
+        shimmer: {
+          from: {
+            backgroundPosition: "0 0",
+          },
+          to: {
+            backgroundPosition: "-200% 0",
+          },
+        },
+        "button-pop": {
+          "0%": {
+            transform: "scale(0.98)",
+          },
+          "40%": {
+            transform: "scale(1.02)",
+          },
+          "100%": {
+            transform: "scale(1)",
+          },
+        },
       },
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
@@ -85,6 +106,7 @@ const config = {
   },
   plugins: [
     require("tailwindcss-animate"),
+    require("daisyui"),
     addVariablesForColors,
     function ({ matchUtilities, theme }: any) {
       matchUtilities(
@@ -109,6 +131,16 @@ const config = {
       );
     },
   ],
+  daisyui: {
+    themes: false,
+    darkTheme: "dark",
+    base: false,
+    styled: true,
+    utils: true,
+    prefix: "",
+    logs: true,
+    themeRoot: "",
+  },
 } satisfies Config;
 
 function addVariablesForColors({ addBase, theme }: any) {

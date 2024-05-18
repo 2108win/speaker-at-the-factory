@@ -4,6 +4,8 @@ import Hero from "@/components/pages/Home/Hero";
 import ListProduct from "@/components/pages/Home/ListProduct";
 import Story from "@/components/pages/Home/Story";
 import Image from "next/image";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 export default function Home() {
   return (
@@ -17,10 +19,16 @@ export default function Home() {
           priority
         />
       </div>
-      <Hero />
+      <Suspense fallback={<Loading />}>
+        <Hero />
+      </Suspense>
       <Story />
-      <BestSeller />
-      <ListProduct />
+      <Suspense fallback={<Loading />}>
+        <BestSeller />
+      </Suspense>
+      <Suspense fallback={<Loading />}>
+        <ListProduct />
+      </Suspense>
       <BannerJoin />
     </>
   );
