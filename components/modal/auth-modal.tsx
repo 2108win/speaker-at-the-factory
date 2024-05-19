@@ -6,7 +6,6 @@ import Loading from "@/components/ui/loading";
 import useSessionUser from "@/hooks/useSession";
 import { User } from "@/interfaces/user";
 import useCart from "@/hooks/useCart";
-import { getCartByUserId, getUserData } from "@/utils/user";
 
 interface AuthModalProps {
   className?: string;
@@ -16,7 +15,6 @@ interface AuthModalProps {
 export default function AuthModal({ className, trigger }: AuthModalProps) {
   const session = useSessionUser();
   const cart = useCart();
-  console.log("🚀 ~ AuthModal ~ session:", session.isLogin);
   const user: User = {
     id: "1",
     name: "Win Lax",

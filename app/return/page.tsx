@@ -7,9 +7,10 @@ type Props = {};
 
 const ContactPage = (props: Props) => {
   return (
-    <Suspense fallback={<Loading />}>
-      <AuthModal trigger={<Button>Đăng nhập</Button>} />
-    </Suspense>
+    // <Suspense fallback={<Loading />}>
+    //   <AuthModal trigger={<Button>Đăng nhập</Button>} />
+    // </Suspense>
+    <div>ContactPage</div>
   );
 };
 
