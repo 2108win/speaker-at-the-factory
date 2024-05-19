@@ -58,7 +58,7 @@ const CartPage = () => {
         </div>
       ) : cart.items.length <= 0 ? (
         <div className="flex flex-col gap-4 w-full items-center h-full mt-14">
-          <div className="bg-gradient-to-l from-neutral-900 via-neutral-500 via-70% to-neutral-200 bg-clip-text text-center text-4xl font-bold text-transparent dark:from-neutral-50 dark:to-neutral-800 md:text-5xl lg:text-6xl !leading-normal">
+          <div className="bg-gradient-to-l from-neutral-900 via-neutral-500 via-70% to-neutral-200 bg-clip-text text-center text-4xl font-bold text-transparent dark:from-neutral-50 dark:to-neutral-800 md:text-5xl lg:text-6xl !leading-normal text-balance">
             Không có sản phẩm nào trong giỏ hàng!
           </div>
           <div className="text-4xl font-bold text-neutral-500 dark:text-neutral-300">😢</div>

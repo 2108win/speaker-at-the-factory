@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { Suspense } from "react";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -118,7 +118,9 @@ const Header = (props: Props) => {
           </NavigationMenu>
         </div>
         <div className="flex ml-auto gap-2 z-10">
-          <NavbarActions />
+          <Suspense fallback={<span className="loading loading-spinner"></span>}>
+            <NavbarActions />
+          </Suspense>
           <Sheet>
             <SheetTrigger
               className={buttonVariants({

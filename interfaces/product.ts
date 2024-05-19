@@ -30,6 +30,7 @@ export type Product = {
   status: StatusProduct["id"];
   images: Image["url"][];
   checked: boolean;
+  idEmployee: string;
 };
 
 export type Image = {

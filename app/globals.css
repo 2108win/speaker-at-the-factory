@@ -59,4 +59,7 @@
   .mt-layout-screen {
     @apply mt-12 md:mt-16 lg:mt-20;
   }
+  .button-pop {
+    @apply active:focus:animate-button-pop active:focus:scale-[0.97] motion-reduce:animate-[button-pop_0.25s_ease-out];
+  }
 }

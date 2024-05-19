@@ -1,18 +1,19 @@
 "use client";
-import { Loader2, ShoppingBag } from "lucide-react";
-import { Button } from "./ui/button";
+import { ShoppingBag } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import useCart from "@/hooks/useCart";
 import { Suspense, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ModeToggle } from "./layout/toggle-mode";
-import AuthModal from "./modal/auth-modal";
-import Loading from "./ui/loading";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ModeToggle } from "@/components/layout/toggle-mode";
+import AuthModal from "@/components/modal/auth-modal";
+import Loading from "@/components/ui/loading";
+import AuthAction from "@/components/AuthAction";
+import useSessionUser from "@/hooks/useSession";
 
 const NavbarActions = () => {
   const router = useRouter();
   const [isMounted, setIsMounted] = useState(false);
-  const isLogin = true;
+  const session = useSessionUser();
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -24,7 +25,7 @@ const NavbarActions = () => {
   }
   return (
     <div className="items-center gap-2 flex">
-      {isLogin ? (
+      {session.isLogin ? (
         <Button onClick={handleGotoCart} className="flex items-center rounded-full px-4 py-2 gap-1">
           <ShoppingBag size={20} />
           <span className="ml-2 font-semibold">{cart.items.length}</span>
@@ -41,14 +42,7 @@ const NavbarActions = () => {
       )}
 
       <Suspense fallback={<Loading />}>
-        {isLogin ? (
-          <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-        ) : (
-          <AuthModal trigger={<Button className="font-semibold">Đăng nhập</Button>} />
-        )}
+        <AuthAction />
       </Suspense>
       <div className="hidden lg:block">
         <ModeToggle />

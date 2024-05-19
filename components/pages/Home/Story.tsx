@@ -46,7 +46,7 @@ const Story = () => {
                 )}
               >
                 <span className="absolute inset-[-1000%] animate-[spin_5s_ease_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#000000_0%,#555555_50%,#ffffff_100%)] dark:bg-[conic-gradient(from_90deg_at_50%_50%,#ffffff_0%,#555555_50%,#000000_100%)]" />
-                <span className="z-10 inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-[linear-gradient(110deg,#000000,25%,#3d444e,55%,#000000)] bg-[length:200%_100%] px-8 py-4 text-lg font-medium text-white backdrop-blur-lg dark:bg-neutral-50/20">
+                <span className="z-10 inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-[linear-gradient(110deg,#000000,25%,#3d444e,55%,#000000)] bg-[length:200%_100%] px-8 py-4 text-lg font-medium text-white backdrop-blur-lg dark:bg-neutral-50/20 hover:bg-[length:100%_150%] transition-all">
                   Xem thêm
                 </span>
               </Link>

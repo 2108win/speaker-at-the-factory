@@ -104,7 +104,7 @@ const CartItem: React.FC<CartItemProps> = ({ data }) => {
                 <Input
                   value={quantity}
                   onChange={onChangeQuantity}
-                  className="max-w-10 text-center focus:outline-none border-none font-semibold text-black focus-visible:ring-0 focus-visible:ring-ring focus-visible:ring-offset-0"
+                  className="max-w-10 text-center focus:outline-none border-none font-semibold focus-visible:ring-0 focus-visible:ring-ring focus-visible:ring-offset-0"
                   min={1}
                   max={100}
                   step={1}

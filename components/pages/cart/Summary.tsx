@@ -1,12 +1,9 @@
 "use client";
-import axios from "axios";
 import { useEffect, useState } from "react";
-// import { useSearchParams } from 'next/navigation';
-
 import { Button } from "@/components/ui/button";
 import Currency from "@/components/ui/currency";
 import useCart from "@/hooks/useCart";
-import { AlertModal } from "@/components/modal/alert-modal";
+import { InvoiceModal } from "@/components/modal/invoice-modal";
 import { Separator } from "@/components/ui/separator";
 import { CreditCard, HandCoins } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -14,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import useSessionUser from "@/hooks/useSession";
 
 const apiInvoiceUrl = process.env.NEXT_PUBLIC_SERVER_URL + "/Invoice";
 
@@ -31,13 +29,21 @@ const payments = [
 const Summary = () => {
   //   const searchParams = useSearchParams();
   const cart = useCart();
+  const session = useSessionUser();
   const items = useCart((state) => state.items.filter((item) => item.checked === true));
   const removeAll = useCart((state) => state.removeAll);
+  const [paymentChoose, setPaymentChoose] = useState("");
+  const [information, setInformation] = useState({
+    paymentChoose: paymentChoose,
+    name: session.user.name || "",
+    email: session.user.email || "",
+    phone: "",
+    address: "",
+    note: "",
+  });
   const [open, setOpen] = useState(false);
   const [isCheckOut, setIsCheckOut] = useState(false);
   const [isAddress, setIsAddress] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [paymentChoose, setPaymentChoose] = useState("");
 
   useEffect(() => {
     if (items.length === 0) {
@@ -47,6 +53,9 @@ const Summary = () => {
     }
   }, [items]);
 
+  useEffect(() => {
+    setInformation({ ...information, paymentChoose: paymentChoose });
+  }, [paymentChoose]);
   //   useEffect(() => {
   //     if (searchParams.get('success')) {
   //       toast({ title: 'Payment completed.' });
@@ -62,7 +71,7 @@ const Summary = () => {
     return item.quantity ? total + Number(item.price * item.quantity) : total + Number(item.price);
   }, 0);
 
-  const onCheckout = async () => {
+  const onCheckout = () => {
     if (!isCheckOut) {
       setIsCheckOut(true);
       return;
@@ -72,43 +81,54 @@ const Summary = () => {
       return;
     }
     if (isAddress && paymentChoose != "") {
-      const body = {
-        ProductIds: items.map((item) => {
-          return {
-            Id: item.id,
-            ProductName: item.productName,
-            Brand: item.brand,
-            Model: item.model,
-            Count: item.quantity,
-            Price: item.price.toString(),
-          };
-        }),
-        TotalPrice: totalPrice.toString(),
-      };
+      if (
+        information.name == "" ||
+        information.email == "" ||
+        information.phone == "" ||
+        information.address == ""
+      ) {
+        toast.error("Vui lý điền đầy đủ thông tin.");
 
-      setLoading(true);
-      const res = await fetch(`${apiInvoiceUrl}/addInvoice`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      });
-      if (res.ok) {
-        setLoading(false);
-        items.map((item) => {
-          cart.removeItem(item.id, false);
-        });
-        toast.success("Đặt hàng thành công.", {
-          description: "Hóa đơn mua hàng sẽ được gửi về email.",
-        });
-      } else {
-        setLoading(false);
-        const response = await res.json();
-        toast.error(`Status: ${res.status}`, {
-          description: response.title,
-        });
+        return;
       }
+      // const body = {
+      //   ProductIds: items.map((item) => {
+      //     return {
+      //       Id: item.id,
+      //       ProductName: item.productName,
+      //       Brand: item.brand,
+      //       Model: item.model,
+      //       Count: item.quantity,
+      //       Price: item.price.toString(),
+      //     };
+      //   }),
+      //   TotalPrice: totalPrice.toString(),
+      // };
+      setOpen(true);
+      // setLoading(true);
+      // const res = await fetch(`${apiInvoiceUrl}/addInvoice`, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(body),
+      // });
+      // if (res.ok) {
+      //   setLoading(false);
+      //   setOpen(false);
+      //   items.map((item) => {
+      //     cart.removeItem(item.id, false);
+      //   });
+      //   toast.success("Đặt hàng thành công.", {
+      //     description: "Hóa đơn mua hàng sẽ được gửi về email.",
+      //   });
+      // } else {
+      //   setLoading(false);
+      //   const response = await res.json();
+      //   toast.error(`Status: ${res.status}`, {
+      //     description: response.title,
+      //   });
+      // }
     }
   };
 
@@ -136,13 +156,20 @@ const Summary = () => {
     }
   };
 
+  const handleChangeInformation = (
+    e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    setInformation({ ...information, [e.target.name]: e.target.value });
+  };
+
   return (
     <>
-      <AlertModal
+      <InvoiceModal
         isOpen={open}
         onClose={() => setOpen(false)}
-        onConfirm={removeAll}
-        loading={false}
+        products={items}
+        total={totalPrice}
+        information={information}
       />
       <div className="flex items-center justify-between mb-2">
         <h3 className="text-2xl font-bold leading-10">Đơn hàng</h3>
@@ -219,6 +246,22 @@ const Summary = () => {
                 <Input
                   type="text"
                   id="name"
+                  name="name"
+                  value={information.name}
+                  onChange={handleChangeInformation}
+                  className="border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="email" className="text-sm font-medium">
+                  Email <span className="text-red-500 font-bold">*</span>
+                </Label>
+                <Input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={information.email}
+                  onChange={handleChangeInformation}
                   className="border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
                 />
               </div>
@@ -229,6 +272,9 @@ const Summary = () => {
                 <Input
                   type="text"
                   id="phone"
+                  name="phone"
+                  value={information.phone}
+                  onChange={handleChangeInformation}
                   className="border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
                 />
               </div>
@@ -239,6 +285,9 @@ const Summary = () => {
                 <Input
                   type="text"
                   id="address"
+                  name="address"
+                  value={information.address}
+                  onChange={handleChangeInformation}
                   className="border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
                 />
               </div>
@@ -248,6 +297,10 @@ const Summary = () => {
                 </Label>
                 <Textarea
                   id="note"
+                  name="note"
+                  value={information.note}
+                  placeholder="Nhập vào ghi chú"
+                  onChange={handleChangeInformation}
                   className="border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
                 />
               </div>
