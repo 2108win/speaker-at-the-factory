@@ -16,7 +16,7 @@ const useSessionUser = create<SessionStore>()(
       user: {} as User,
       login: (data: User) => {
         set({ isLogin: true, user: data });
-        toast.success(`Xin chào <b>${data.name}</b>!`, {
+        toast.success(`Xin chào <b>${data.fullName}</b>!`, {
           description: "Đăng nhập thành công! ",
         });
       },

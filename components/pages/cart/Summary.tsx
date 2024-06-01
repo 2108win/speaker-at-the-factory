@@ -11,6 +11,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+// import useSessionUser from "@/hooks/useSession";
+import { useUser } from "@clerk/nextjs";
 import useSessionUser from "@/hooks/useSession";
 
 const apiInvoiceUrl = process.env.NEXT_PUBLIC_SERVER_URL + "/Invoice";
@@ -29,15 +31,15 @@ const payments = [
 const Summary = () => {
   //   const searchParams = useSearchParams();
   const cart = useCart();
-  const session = useSessionUser();
+  const user = useSessionUser().user;
   const items = useCart((state) => state.items.filter((item) => item.checked === true));
   const removeAll = useCart((state) => state.removeAll);
   const [paymentChoose, setPaymentChoose] = useState("");
   const [information, setInformation] = useState({
     paymentChoose: paymentChoose,
-    name: session.user.name || "",
-    email: session.user.email || "",
-    phone: "",
+    name: user?.fullName || "",
+    email: user?.emailAddresses || "",
+    phone: user?.phoneNumbers || "",
     address: "",
     note: "",
   });
@@ -55,7 +57,7 @@ const Summary = () => {
 
   useEffect(() => {
     setInformation({ ...information, paymentChoose: paymentChoose });
-  }, [paymentChoose]);
+  }, [paymentChoose, user]);
   //   useEffect(() => {
   //     if (searchParams.get('success')) {
   //       toast({ title: 'Payment completed.' });
@@ -91,19 +93,24 @@ const Summary = () => {
 
         return;
       }
-      // const body = {
-      //   ProductIds: items.map((item) => {
-      //     return {
-      //       Id: item.id,
-      //       ProductName: item.productName,
-      //       Brand: item.brand,
-      //       Model: item.model,
-      //       Count: item.quantity,
-      //       Price: item.price.toString(),
-      //     };
-      //   }),
-      //   TotalPrice: totalPrice.toString(),
-      // };
+      const body = {
+        ProductIds: items.map((item) => {
+          return {
+            Id: item.id,
+            ProductName: item.productName,
+            Brand: item.brand,
+            Model: item.model,
+            Count: item.quantity,
+            Price: item.price.toString(),
+          };
+        }),
+        UserName: information.name,
+        PhoneNumber: information.phone,
+        LocaltionUser: information.address,
+        Note: information.note,
+        TotalPrice: totalPrice.toString(),
+      };
+      console.log("🚀 ~ onCheckout ~ body:", body);
       setOpen(true);
       // setLoading(true);
       // const res = await fetch(`${apiInvoiceUrl}/addInvoice`, {
@@ -221,7 +228,7 @@ const Summary = () => {
                   key={payment.name}
                   className={cn(
                     "flex flex-col rounded-md border-2 h-full p-5 w-full",
-                    paymentChoose === payment.name && "border-green-500 bg-green-50"
+                    paymentChoose === payment.name && "border-green-500 bg-green-500/10"
                   )}
                   onClick={() => {
                     setPaymentChoose(payment.name);
@@ -260,7 +267,7 @@ const Summary = () => {
                   type="email"
                   id="email"
                   name="email"
-                  value={information.email}
+                  value={information.email as any}
                   onChange={handleChangeInformation}
                   className="border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
                 />
@@ -273,7 +280,7 @@ const Summary = () => {
                   type="text"
                   id="phone"
                   name="phone"
-                  value={information.phone}
+                  value={information.phone as any}
                   onChange={handleChangeInformation}
                   className="border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
                 />

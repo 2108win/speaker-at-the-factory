@@ -45,17 +45,17 @@ type Social = {
 const dataSocial: Social[] = [
   {
     title: "Facebook",
-    href: "/#",
+    href: "https://www.facebook.com/loa.tai.xuong/",
     icon: "facebook",
   },
   {
     title: "Instagram",
-    href: "/#",
+    href: "/",
     icon: "instagram",
   },
   {
     title: "Youtube",
-    href: "/#",
+    href: "/",
     icon: "youtube",
   },
 ];
@@ -75,6 +75,7 @@ const Footer = () => {
             <div className="mt-6 flex w-full max-w-96 items-center gap-2 rounded-3xl bg-neutral-50/30 p-[2px] text-black dark:bg-neutral-950/30 dark:text-white">
               <Input
                 type="email"
+                name="email"
                 autoComplete="off"
                 placeholder="Email của bạn"
                 className="max-w-sm rounded-3xl border-none bg-transparent font-medium outline-none placeholder:text-neutral-200"
@@ -94,9 +95,10 @@ const Footer = () => {
               </h3>
               <ul className="mt-6 space-y-2">
                 {item.items.map((item, index) => (
-                  <li key={"items" + index}>
+                  <li key={item.title + index}>
                     <Link
                       href={item.href}
+                      aria-label={item.title}
                       className="text-neutral-50 underline-offset-2  transition-colors duration-200 ease-in-out hover:text-neutral-100 hover:underline dark:text-neutral-900 dark:hover:text-neutral-100"
                     >
                       {item.title}

@@ -28,8 +28,8 @@ interface InvoiceModalProps {
   information: {
     paymentChoose: string;
     name: string;
-    email: string;
-    phone: string;
+    email: string | any;
+    phone: string | any;
     address: string;
     note: string;
   };
@@ -43,6 +43,7 @@ export const InvoiceModal: React.FC<InvoiceModalProps> = ({
   information: information,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
   const cart = useCart();
   useEffect(() => {
     setIsMounted(true);
@@ -68,11 +69,11 @@ export const InvoiceModal: React.FC<InvoiceModalProps> = ({
           Price: item.price.toString(),
         };
       }),
-      localtionUser: information.address,
-      phoneNumber: information.phone,
-      email: information.email,
-      userName: information.name,
-      note: information.note || "(Trống)",
+      LocaltionUser: information.address,
+      PhoneNumber: information.phone,
+      // email: information.email,
+      UserName: information.name,
+      Note: information.note || "(Trống)",
       TotalPrice: total.toString(),
     };
     const res = await fetch(`${apiInvoiceUrl}/addInvoice`, {
@@ -131,7 +132,9 @@ export const InvoiceModal: React.FC<InvoiceModalProps> = ({
             </div>
           </CardContent>
           <CardHeader>
-            <CardTitle>Thông tin sản đơn hàng:</CardTitle>
+            <CardTitle>
+              Thông tin sản đơn hàng:({products.reduce((acc, item) => acc + item.quantity, 0)})
+            </CardTitle>
           </CardHeader>
           <CardContent className="gap-3 flex flex-col">
             {products.map((product) => (
@@ -158,11 +161,18 @@ export const InvoiceModal: React.FC<InvoiceModalProps> = ({
           </CardFooter>
         </Card>
         <DialogFooter className="flex sm:!justify-start items-center space-x-2">
-          <Input type="checkbox" name="confirm" id="confirm" className="h-4 w-4" />
+          <Input
+            onChange={() => setIsChecked(!isChecked)}
+            type="checkbox"
+            name="confirm"
+            id="confirm"
+            className="h-4 w-4"
+          />
           <Label htmlFor="confirm">Xác nhận đã đúng</Label>
         </DialogFooter>
         <DialogFooter className="sm:!justify-start">
           <Button
+            disabled={!isChecked}
             onClick={() => {
               onConfirm();
             }}

@@ -118,9 +118,7 @@ const Header = (props: Props) => {
           </NavigationMenu>
         </div>
         <div className="flex ml-auto gap-2 z-10">
-          <Suspense fallback={<span className="loading loading-spinner"></span>}>
-            <NavbarActions />
-          </Suspense>
+          <NavbarActions />
           <Sheet>
             <SheetTrigger
               className={buttonVariants({
@@ -128,6 +126,7 @@ const Header = (props: Props) => {
                 className: "lg:hidden",
               })}
             >
+              <span className="sr-only">Menu</span>
               <Menu className="h-6 w-6 cursor-pointer dark:text-neutral-50 lg:hidden" />
             </SheetTrigger>
             <SheetContent className="h-dvh bg-white dark:bg-black">

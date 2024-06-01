@@ -8,6 +8,8 @@ import { Input } from "@/components/ui/input";
 import React, { useState } from "react";
 import AuthModal from "@/components/modal/auth-modal";
 import useSessionUser from "@/hooks/useSession";
+import { useSession } from "@clerk/nextjs";
+import { addToCart } from "@/utils/cart";
 
 type Props = {
   product: Product;
@@ -20,7 +22,7 @@ export const ProductCardAction = ({ product, size, className, isMain }: Props) =
   const [quantity, setQuantity] = useState(1);
   const router = useRouter();
   const cart = useCart();
-  const session = useSessionUser();
+  const { isSignedIn, isLoaded } = useSession();
 
   const onChangeQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (Number(e.target.value) < 1) return;
@@ -28,7 +30,7 @@ export const ProductCardAction = ({ product, size, className, isMain }: Props) =
     // cart.updateItem(product.id, Number(e.target.value));
   };
 
-  const onAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onAddToCart = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
     cart.addItem(product, quantity, () => {
@@ -84,7 +86,7 @@ export const ProductCardAction = ({ product, size, className, isMain }: Props) =
         </div>
       )}
       <div className="flex flex-col sm:flex-row gap-4 mt-4">
-        {session.isLogin ? (
+        {isSignedIn ? (
           <Button onClick={onAddToCart} size={size} className="w-full">
             Thêm vào giỏ hàng
             <ShoppingCart className="ml-4" size={20} />
@@ -100,7 +102,7 @@ export const ProductCardAction = ({ product, size, className, isMain }: Props) =
           />
         )}
 
-        {session.isLogin ? (
+        {isSignedIn ? (
           <Button
             onClick={handleBuyNow}
             className="w-full dark:bg-[linear-gradient(110deg,#000000,25%,#3d444e,55%,#000000)] hover:bg-[length:100%_150%] transition-all bg-[length:200%_100%] bg-[linear-gradient(290deg,#e5e5e5,25%,#3d444e,55%,#e5e5e5)]"
@@ -130,7 +132,7 @@ export const ProductCardAction = ({ product, size, className, isMain }: Props) =
 export const ProductCardActionHome = ({ product, className }: Props) => {
   const router = useRouter();
   const cart = useCart();
-  const session = useSessionUser();
+  const { isSignedIn, isLoaded } = useSession();
 
   const onAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -141,7 +143,7 @@ export const ProductCardActionHome = ({ product, className }: Props) => {
   };
   return (
     <div className={`mt-8 flex flex-col items-center gap-4 md:flex-row ${className}`}>
-      {session.isLogin ? (
+      {isSignedIn ? (
         <Button
           onClick={() => router.push(`/products/${product.slug}`)}
           className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:ring-offset-2 focus:ring-offset-neutral-50"
@@ -163,7 +165,7 @@ export const ProductCardActionHome = ({ product, className }: Props) => {
           }
         />
       )}
-      {session.isLogin ? (
+      {isSignedIn ? (
         <Button
           onClick={onAddToCart}
           className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:ring-offset-2 focus:ring-offset-neutral-50"
