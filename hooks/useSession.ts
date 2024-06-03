@@ -4,7 +4,8 @@ import { User } from "@/interfaces/user";
 import { toast } from "sonner";
 interface SessionStore {
   isLogin: boolean;
-  user: User;
+  user: any;
+  setSession(data: any): void;
   login: (data: User) => void;
   logout: () => void;
 }
@@ -13,7 +14,11 @@ const useSessionUser = create<SessionStore>()(
   persist(
     (set, get) => ({
       isLogin: false,
-      user: {} as User,
+      user: {} as any,
+      setSession(data: any) {
+        set({ user: data, isLogin: true });
+      },
+
       login: (data: User) => {
         set({ isLogin: true, user: data });
         toast.success(`Xin chào <b>${data.fullName}</b>!`, {

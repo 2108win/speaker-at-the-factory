@@ -29,11 +29,10 @@ const payments = [
 ];
 
 const Summary = () => {
-  //   const searchParams = useSearchParams();
   const cart = useCart();
   const user = useSessionUser().user;
   const items = useCart((state) => state.items.filter((item) => item.checked === true));
-  const removeAll = useCart((state) => state.removeAll);
+  // const removeAll = useCart((state) => state.removeAll);
   const [paymentChoose, setPaymentChoose] = useState("");
   const [information, setInformation] = useState({
     paymentChoose: paymentChoose,
@@ -48,16 +47,16 @@ const Summary = () => {
   const [isAddress, setIsAddress] = useState(false);
 
   useEffect(() => {
-    if (items.length === 0) {
+    if (items.length <= 0) {
       setIsCheckOut(false);
       setIsAddress(false);
       setPaymentChoose("");
     }
-  }, [items]);
+  }, [items.length]);
 
   useEffect(() => {
     setInformation({ ...information, paymentChoose: paymentChoose });
-  }, [paymentChoose, user]);
+  }, [paymentChoose, information]);
   //   useEffect(() => {
   //     if (searchParams.get('success')) {
   //       toast({ title: 'Payment completed.' });
@@ -93,24 +92,23 @@ const Summary = () => {
 
         return;
       }
-      const body = {
-        ProductIds: items.map((item) => {
-          return {
-            Id: item.id,
-            ProductName: item.productName,
-            Brand: item.brand,
-            Model: item.model,
-            Count: item.quantity,
-            Price: item.price.toString(),
-          };
-        }),
-        UserName: information.name,
-        PhoneNumber: information.phone,
-        LocaltionUser: information.address,
-        Note: information.note,
-        TotalPrice: totalPrice.toString(),
-      };
-      console.log("🚀 ~ onCheckout ~ body:", body);
+      // const body = {
+      //   ProductIds: items.map((item) => {
+      //     return {
+      //       Id: item.id,
+      //       ProductName: item.productName,
+      //       Brand: item.brand,
+      //       Model: item.model,
+      //       Count: item.quantity,
+      //       Price: item.price.toString(),
+      //     };
+      //   }),
+      //   UserName: information.name,
+      //   PhoneNumber: information.phone,
+      //   LocaltionUser: information.address,
+      //   Note: information.note,
+      //   TotalPrice: totalPrice.toString(),
+      // };
       setOpen(true);
       // setLoading(true);
       // const res = await fetch(`${apiInvoiceUrl}/addInvoice`, {

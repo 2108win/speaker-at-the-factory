@@ -5,7 +5,7 @@ import CartItem from "@/components/pages/cart/CartItem";
 import Summary from "@/components/pages/cart/Summary";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { CSSProperties, useEffect, useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 
 import {
@@ -23,32 +23,53 @@ import { addToCart } from "@/utils/cart";
 import { SignedIn, SignedOut, useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import AuthSignIn from "@/components/auth-sign-in";
+import Loading from "../loading";
 const CartPage = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [open, setOpen] = useState(false);
   const [isAllChecked, setIsAllChecked] = useState(false);
-  const { user } = useUser();
+  const [counter, setCounter] = useState(10);
+  // const { user } = useUser();
   const router = useRouter();
   const cart = useCart();
-
   useEffect(() => {
-    if (user && cart.items.length > 0) {
-      const body = {
-        CusToken: user.id || "",
-        CusName: user.fullName || "",
-        ItemsId: cart.items.map((item) => {
-          return {
-            Id: item.id,
-            Qty: item.quantity,
-          };
-        }),
-      };
-      const syncCart = async () => {
-        const res = await addToCart(body);
-      };
-      syncCart();
+    const counterInterval = setInterval(() => {
+      setCounter((prevCounter) => prevCounter - 1);
+    }, 1000);
+
+    const cleanup = () => {
+      clearInterval(counterInterval);
+    };
+
+    if (cart.items.length <= 0) {
+      if (counter <= 0) {
+        router.push("/products");
+        cleanup();
+      }
+    } else {
+      setCounter(10);
     }
-  }, [user, cart.items]);
+
+    return cleanup;
+  }, [cart.items.length, counter, router]);
+
+  // useEffect(() => {
+  //   if (user && cart.items.length > 0) {
+  //     const body = {
+  //       CusToken: user.id || "",
+  //       CusName: user.fullName || "",
+  //       ItemsId: cart.items.map((item) => {
+  //         return {
+  //           Id: item.id,
+  //           Qty: item.quantity,
+  //         };
+  //       }),
+  //     };
+  //     const syncCart = async () => {
+  //       const res = await addToCart(body);
+  //     };
+  //     syncCart();
+  //   }
+  // }, [user, cart.items]);
 
   useEffect(() => {
     setIsLoading(cart.isLoading);
@@ -69,7 +90,7 @@ const CartPage = () => {
       cart.checkedItem(item.id, !isAllChecked);
     });
   };
-
+  useEffect(() => {}, []);
   return (
     <div className="relative z-[5] mx-auto h-full w-full max-w-7xl items-center gap-6 px-4 lg:px-8 flex flex-col mb-14 md:mb-16 lg:mb-20">
       <h1 className="bg-gradient-to-r from-neutral-500 to-neutral-950 bg-clip-text text-3xl font-bold !leading-relaxed text-transparent dark:from-neutral-700 dark:to-neutral-100 md:text-5xl lg:text-6xl">
@@ -96,6 +117,13 @@ const CartPage = () => {
                 })}
               >
                 👉 Đi đến trang sản phẩm
+                <span className="countdown">
+                  <span
+                    className="ml-2"
+                    id="counterElement"
+                    style={{ "--value": counter } as CSSProperties}
+                  ></span>
+                </span>
               </Link>
             </div>
           </div>
