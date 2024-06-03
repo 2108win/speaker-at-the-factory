@@ -35,7 +35,6 @@ const Summary = () => {
   // const removeAll = useCart((state) => state.removeAll);
   const [paymentChoose, setPaymentChoose] = useState("");
   const [information, setInformation] = useState({
-    paymentChoose: paymentChoose,
     name: user?.fullName || "",
     email: user?.emailAddresses || "",
     phone: user?.phoneNumbers || "",
@@ -53,10 +52,6 @@ const Summary = () => {
       setPaymentChoose("");
     }
   }, [items.length]);
-
-  useEffect(() => {
-    setInformation({ ...information, paymentChoose: paymentChoose });
-  }, [paymentChoose, information]);
   //   useEffect(() => {
   //     if (searchParams.get('success')) {
   //       toast({ title: 'Payment completed.' });
@@ -175,6 +170,7 @@ const Summary = () => {
         products={items}
         total={totalPrice}
         information={information}
+        payment={paymentChoose}
       />
       <div className="flex items-center justify-between mb-2">
         <h3 className="text-2xl font-bold leading-10">Đơn hàng</h3>

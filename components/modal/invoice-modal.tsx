@@ -28,13 +28,13 @@ interface InvoiceModalProps {
   products: Product[];
   total: number;
   information: {
-    paymentChoose: string;
     name: string;
     email: string | any;
     phone: string | any;
     address: string;
     note: string;
   };
+  payment: string;
 }
 
 export const InvoiceModal: React.FC<InvoiceModalProps> = ({
@@ -43,6 +43,7 @@ export const InvoiceModal: React.FC<InvoiceModalProps> = ({
   products,
   total,
   information: information,
+  payment,
 }) => {
   const [isChecked, setIsChecked] = useState(false);
   const cart = useCart();
@@ -146,7 +147,7 @@ export const InvoiceModal: React.FC<InvoiceModalProps> = ({
                   <Currency value={total} />
                 </div>
               </div>
-              <p className="font-bold">Phương thức thanh toán: {information.paymentChoose}</p>
+              <p className="font-bold">Phương thức thanh toán: {payment}</p>
             </CardContent>
             <CardFooter className="p-4">
               <div className="grid grid-cols-3">
